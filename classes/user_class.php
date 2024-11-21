@@ -1,6 +1,6 @@
 <?php
 // Connect to database class
-require("../settings/db_class.php");
+include "../settings/db_class.php";
 
 /**
  * User class to handle user-related database functions.
@@ -79,66 +79,69 @@ class User extends db_connection
         }
     }
 
-    public function addRequest($userID, $role)
-    {
-        $ndb = new db_connection();
+//     public function addRequest($userID, $role)
+//     {
+//         $ndb = new db_connection();
 
-        // Sanitize inputs
-        $user_id = mysqli_real_escape_string($ndb->db_conn(), $userID);
-        $role_requested = mysqli_real_escape_string($ndb->db_conn(), $role);
+//         // Sanitize inputs
+//         $user_id = mysqli_real_escape_string($ndb->db_conn(), $userID);
+//         $role_requested = mysqli_real_escape_string($ndb->db_conn(), $role);
 
-        // SQL query to insert a new customer
-        $sql = "INSERT INTO `requests` (`user_id`, `role_requested`) 
-                VALUES ('$user_id', '$role_requested')";
+//         // SQL query to insert a new customer
+//         $sql = "INSERT INTO `requests` (`user_id`, `role_requested`) 
+//                 VALUES ('$user_id', '$role_requested')";
 
-        // Execute query and return result
-        return $this->db_query($sql);
-    }
+//         // Execute query and return result
+//         return $this->db_query($sql);
+//     }
 
-    public function changeRoleToAdmin($user_id) 
-    {
-        $ndb = new db_connection();
+//     public function changeRoleToAdmin($user_id) 
+//     {
+//         $ndb = new db_connection();
 
-        // SQL query to change the role of a user
-        $sql = "UPDATE `users` SET `role` = 'administrator' WHERE `user_id` = '$user_id'";
+//         // SQL query to change the role of a user
+//         $sql = "UPDATE `users` SET `role` = 'administrator' WHERE `user_id` = '$user_id'";
 
-        // Execute query and return result
-        return $this->db_query($sql);
-    }
+//         // Execute query and return result
+//         return $this->db_query($sql);
+//     }
 
-    public function changeRoleToInvMan($user_id) 
-    {
-        $ndb = new db_connection();
+//     public function changeRoleToInvMan($user_id) 
+//     {
+//         $ndb = new db_connection();
 
-        // SQL query to change the role of a user
-        $sql = "UPDATE `users` SET `role` = 'inventory manager' WHERE `user_id` = '$user_id'";
+//         // SQL query to change the role of a user
+//         $sql = "UPDATE `users` SET `role` = 'inventory manager' WHERE `user_id` = '$user_id'";
 
-        // Execute query and return result
-        return $this->db_query($sql);
-    }
+//         // Execute query and return result
+//         return $this->db_query($sql);
+//     }
 
-    public function changeRoleToSalesPnl($user_id) 
-    {
-        $ndb = new db_connection();
+//     public function changeRoleToSalesPrsnl($user_id) 
+//     {
+//         $ndb = new db_connection();
 
-        // SQL query to change the role of a user
-        $sql = "UPDATE `users` SET `role` = 'sales personnel' WHERE `user_id` = '$user_id'";
+//         // SQL query to change the role of a user
+//         $sql = "UPDATE `users` SET `role` = 'sales personnel' WHERE `user_id` = '$user_id'";
 
-        // Execute query and return result
-        return $this->db_query($sql);
-    }
+//         // Execute query and return result
+//         return $this->db_query($sql);
+//     }
 
-    public function changeRoleToCustomer($user_id) 
-    {
-        $ndb = new db_connection();
+//     public function changeRoleToCustomer($user_id) 
+//     {
+//         $ndb = new db_connection();
 
-        // SQL query to change the role of a user
-        $sql = "UPDATE `users` SET `role` = 'customer' WHERE `user_id` = '$user_id'";
+//         // SQL query to change the role of a user
+//         $sql = "UPDATE `users` SET `role` = 'customer' WHERE `user_id` = '$user_id'";
 
-        // Execute query and return result
-        return $this->db_query($sql);
-    }
+//         // Execute query and return result
+//         return $this->db_query($sql);
+//     }
 
 }
 
+// $user = new User();
+// var_dump($user->addUser("Akos Asante", "aasante@hotmail.com", "@asante098"));
+// exit();
 ?>

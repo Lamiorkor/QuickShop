@@ -1,24 +1,30 @@
 <?php
-include ('../controllers/user_controller.php');
+include "../controllers/user_controller.php";
 
-session_start();
+//session_start();
 
 if (isset($_POST['signup'])) {
     $name = $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $requested_role = $_POST['rolerequest'];
+    // $requested_role = $_POST['rolerequest'];
+    // // var_dump($requested_role);
+    // // exit();
+    // $user_id = $_SESSION['user_id'];
 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-     // Call registerController
-     $registerUser = registerController($name, $email, $hashed_password);
+    echo "ain't nothing but a mistake";
+    exit();
 
-     // Call addRequestController
-     $role_request = addRequestController($_SESSION['user_id'], $requested_role);
+    // Call registerController
+    $registerUser = registerController($name, $email, $hashed_password);
+
+    // Call addRequestController
+    //$role_request = addRequestController($user_id, $requested_role);
 
     // Check if registration was successful
-    if ($registerUser !== false) {
+    if ($registerUser !== null) {
         // Redirect to login page with success message
         header("Location:../view/login_and_register.php");
         exit();
