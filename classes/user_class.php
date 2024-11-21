@@ -119,4 +119,5 @@ class User extends db_connection
         return $this->db_query($sql);
     }
 }
+
 ?>

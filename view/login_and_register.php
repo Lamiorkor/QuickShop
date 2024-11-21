@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QuickShop - Login</title>
-    <link rel="stylesheet" type="text/css" href="../css/login_and_register_view.css">
+    <link rel="stylesheet" type="text/css" href="../css/login_and_register.css">
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
 </head>
 

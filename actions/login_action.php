@@ -5,17 +5,17 @@ session_start();
 include ("../controllers/user_controller.php");
 
 // Check if form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (isset($_POST['signup'])) {
     // Check if email and password are set and not empty
-    if (isset($_POST["email"]) && isset($_POST["password"]) && !empty($_POST["email"]) && !empty($_POST["password"])) {
-        $email = mysqli_real_escape_string($con, $_POST['email']);
-        $password = mysqli_real_escape_string($con,$_POST['password']);
+    if (isset($_POST['email']) && isset($_POST['password']) && !empty($_POST['email']) && !empty($_POST['password'])) {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
 
         // Login user
         $user = loginController($email, $password);
 
         // Check if login was successful
-        if ($user !== null) {
+        if ($user !== false) {
             // Start session
             session_start();
 
@@ -49,18 +49,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             // Redirect back to login page with error message
             header("Location: ../view/login_and_register.php");
-            echo "Error: You are not registered";
+            //$message = "Error: You are not registered";
+            echo "<script>alert('Error: You are not registered')</script>";
             exit();
         } 
     } else {
     // Redirect back to login page with error message
     header("Location: ../view/login_and_register.php");
-    echo "Error: Empty fields";
+    //$message = "Error: Empty fields";
+    echo "<script>alert('Error: Empty fields')</script>";
     exit();
     }
 } else {
 // Redirect back to login page
 header("Location: ../view/login_and_register.php");
+//$message = "Error: Form not submitted";
+echo "<script>alert('Error: Form not submitted')</script>";
 exit();
 }
 

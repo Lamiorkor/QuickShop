@@ -1,11 +1,11 @@
 <?php
 include ('../controllers/user_controller.php');
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (isset($_POST['signup'])) {
 
-    $name = mysqli_real_escape_string($con, $_POST['name']);
-    $email = mysqli_real_escape_string($con, $_POST['email']);
-    $password = mysqli_real_escape_string($con, $_POST['password']);
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
