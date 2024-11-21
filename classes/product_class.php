@@ -99,5 +99,8 @@ class Product extends db_connection
         return $total_products['total_products'];
         
     }
+
+
+    
 }
 ?>
