@@ -1,14 +1,14 @@
 <?php
 session_start();
 $role = "Administrator";
-// require_once('../controllers/product_controller.php');
-// require_once('../controllers/user_controller.php');
-// require_once('../controllers/order_controller.php');
+require_once('../controllers/product_controller.php');
+require_once('../controllers/user_controller.php');
+require_once('../controllers/order_controller.php');
 // session_start();
 
-// $totalProducts = getTotalProductsCountController();
-// $totalOrders = getTotalOrdersCount();
-// $totalRevenue = getTotalOrderRevenueController();
+$totalProducts = getTotalProductsCountController();
+$totalOrders = getTotalOrdersCount();
+$totalRevenue = getTotalOrderRevenueController();
 // $recentOrders = getRecentOrders();
 // $allUsers = getAllUsers(); // Fetch all users for role management
 ?>
@@ -76,15 +76,15 @@ $role = "Administrator";
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                     <div class="bg-white p-6 rounded-lg shadow-sm">
                         <h4 class="text-sm text-gray-500">Total Products</h4>
-                        <h3 class="text-2xl font-bold"><?php echo $totalProducts['count']; ?></h3>
+                        <h3 class="text-2xl font-bold"><?php echo $totalProducts; ?></h3>
                     </div>
                     <div class="bg-white p-6 rounded-lg shadow-sm">
                         <h4 class="text-sm text-gray-500">Total Orders</h4>
-                        <h3 class="text-2xl font-bold"><?php echo $totalOrders['total_orders']; ?></h3>
+                        <h3 class="text-2xl font-bold"><?php echo $totalOrders; ?></h3>
                     </div>
                     <div class="bg-white p-6 rounded-lg shadow-sm">
                         <h4 class="text-sm text-gray-500">Total Revenue</h4>
-                        <h3 class="text-2xl font-bold">$<?php echo $totalRevenue['total_revenue']; ?></h3>
+                        <h3 class="text-2xl font-bold">$<?php echo $totalRevenue; ?></h3>
                     </div>
                 </div>
 

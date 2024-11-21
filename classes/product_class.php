@@ -1,6 +1,6 @@
 <?php
 // Connect to database class
-require("../settings/db_class.php");
+require_once("../settings/db_class.php");
 
 /**
  * Product class to handle brand-related database functions.
@@ -90,6 +90,14 @@ class Product extends db_connection
 
         // Execute the query
         return $this->db_query($sql);
+    }
+
+    function getTotalProducts(){
+        $sql = "SELECT COUNT(*) AS total_products FROM `products`";
+        $result = $this->db_fetch_one($sql);
+        $total_products = $result;
+        return $total_products['total_products'];
+        
     }
 }
 ?>

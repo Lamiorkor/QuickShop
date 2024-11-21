@@ -1,6 +1,6 @@
 <?php
 // Include the Product class
-include("../classes/product_class.php");
+require_once("../classes/product_class.php");
 
 function addProductController($pname, $description, $price, $stock_qty) {
     // Create an instance of the Product class
@@ -40,6 +40,16 @@ function updateProductController($productID, $pname, $description, $price, $stoc
 
     // Return the getOneProduct method
     return $product->editProduct($productID, $pname, $description, $price, $stock_qty);
+}
+
+
+function getTotalProductsCountController(){
+    // Create an instance of the Product class
+    $product = new Product();
+
+    // Return the getOneProduct method
+    return $product->getTotalProducts();
+    
 }
 
 

@@ -1,6 +1,6 @@
 <?php
 // Connect to database class
-include "../settings/db_class.php";
+require_once("../settings/db_class.php");
 
 /**
  * User class to handle user-related database functions.

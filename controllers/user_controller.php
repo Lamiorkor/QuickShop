@@ -1,6 +1,6 @@
 <?php
 // Include the User class
-include "../classes/user_class.php";
+require_once("../classes/user_class.php");
 
 
 function registerController($name, $email, $password) {

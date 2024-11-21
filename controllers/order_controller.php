@@ -1,6 +1,6 @@
 <?php
 // Include the order class
-include("../classes/order_class.php");
+require_once("../classes/order_class.php");
 
 function addOrderController($userID, $orderDate, $amount) {
     // Create an instance of the Order class
@@ -32,5 +32,22 @@ function getOrdersController() {
     // Return the getOrders method
     return $orders->getOrders();
 }
+
+function getTotalOrdersCount(){
+    // Create an instance of the Order class
+    $order = new Orders();
+
+    // Return the getOneProduct method
+    return $order->getTotalOrders();
+}
+
+function getTotalOrderRevenueController(){
+    // Create an instance of the Order class
+    $order = new Orders();
+
+    // Return the getOneProduct method
+    return $order->getTotalOrderAmounts();
+    
+}   
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 // Connect to database class
-require("../settings/db_class.php");
+require_once("../settings/db_class.php");
 
 /**
  * Orders class to handle order-related database functions.
@@ -79,6 +79,32 @@ class Orders extends db_connection
         }
     
         return $orders;
+    }
+
+    function getTotalOrders() {
+        $ndb = new db_connection();
+
+        // Query to fetch categories
+        $sql = "SELECT COUNT(*) as total_orders FROM `orders`";
+
+        $result = $this->db_fetch_one($sql);
+
+        return $result['total_orders'];
+    
+        
+    }
+
+    function getTotalOrderAmounts() {
+        $ndb = new db_connection();
+
+        // Query to fetch categories
+        $sql = "SELECT SUM(total_amount) as total_revenue FROM `orders`";
+
+        $result = $this->db_fetch_one($sql);
+
+        return $result['total_revenue'];
+    
+        
     }
     
 }
