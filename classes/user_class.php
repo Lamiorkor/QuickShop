@@ -23,52 +23,9 @@ class User extends db_connection
         $sql = "INSERT INTO `users` (`name`, `email`, `password`, `role`) 
                 VALUES ('$user_name', '$user_email', '$hashed_password', 'customer')";
 
-        // var_dump($sql);
-        // exit();
-
         // Execute query and return result
         return $ndb->db_query($sql);
-        // echo "I want it that way!";
-        // exit();
     }
-
-//     public function addUser($name, $email, $password)
-// {
-//     $ndb = new db_connection();
-//     $conn = $ndb->db_conn(); // Store connection in a variable
-
-//     // SQL query to insert a new user
-//     $sql = "INSERT INTO `users` (`name`, `email`, `password`, `role`) 
-//             VALUES (?, ?, ?, 'customer')";
-
-//     // Prepare the statement
-//     $stmt = $conn->prepare($sql);
-//     if ($stmt === false) {
-//         die('Prepare failed: ' . htmlspecialchars($conn->error));
-//     }
-
-//     // Hash the password
-//     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-//     // Bind parameters
-//     $stmt->bind_param("sss", $name, $email, $hashed_password);
-
-//     // Execute the statement
-//     $result = $stmt->execute();
-
-//     // Check for errors and return result
-//     if ($result) {
-//         $stmt->close();
-//         $conn->close();
-//         return true; // User added successfully
-//     } else {
-//         error_log("Error: " . $stmt->error);
-//         $stmt->close();
-//         $conn->close();
-//         return false; // Indicate failure
-//     }
-// }
-
 
     // Check if an email already exists in the database
     public function emailExists($email)
@@ -184,7 +141,4 @@ class User extends db_connection
 
 }
 
-$user = new User();
-var_dump($user->addUser("Akos Asante", "aasante@hotmail.com", "@asante098"));
-exit();
 ?>

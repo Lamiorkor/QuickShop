@@ -10,8 +10,6 @@ function registerController($name, $email, $password) {
     // Return the register method
     return $new_user->addUser($name, $email, $password);
 }
-// echo registerController("Akos Asante", "aasante@hotmail.com", "@asante098");
-// exit();
 
 function loginController($email, $password) {
     // Create an instance of the User class
