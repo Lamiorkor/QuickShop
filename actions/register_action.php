@@ -21,7 +21,7 @@ if (isset($_POST['signup'])) {
     //$role_request = addRequestController($user_id, $requested_role);
 
     // Check if registration was successful
-    if ($registerUser !== null) {
+    if ($registerUser !== false) {
         // Redirect to login page with success message
         header("Location:../view/login_and_register.php");
         exit();

@@ -1,9 +1,17 @@
 <?php
 //Database credentials
 
-define('SERVER','localhost');
-define('USERNAME','root');
-define('PASSWORD','');
-define('DATABASE','infosec_assign2');
+if (!defined('SERVER')) {
+    define('SERVER','localhost');
+}
+if (!defined('USERNAME')) {
+    define('USERNAME','root');
+}
+if (!defined('PASSWORD')) {
+    define('PASSWORD','');
+}
+if (!defined('DATABASE')) {
+    define('DATABASE','infosec_assign2');
+}
 
 ?>
