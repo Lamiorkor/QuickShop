@@ -19,16 +19,56 @@ class User extends db_connection
 
         $hashed_password = password_hash($user_password, PASSWORD_DEFAULT);
 
-        echo "I never wanna hear you sayyy";
-        exit();
-
         // SQL query to insert a new customer
         $sql = "INSERT INTO `users` (`name`, `email`, `password`, `role`) 
                 VALUES ('$user_name', '$user_email', '$hashed_password', 'customer')";
 
+        // var_dump($sql);
+        // exit();
+
         // Execute query and return result
-        return $this->db_query($sql);
+        return $ndb->db_query($sql);
+        // echo "I want it that way!";
+        // exit();
     }
+
+//     public function addUser($name, $email, $password)
+// {
+//     $ndb = new db_connection();
+//     $conn = $ndb->db_conn(); // Store connection in a variable
+
+//     // SQL query to insert a new user
+//     $sql = "INSERT INTO `users` (`name`, `email`, `password`, `role`) 
+//             VALUES (?, ?, ?, 'customer')";
+
+//     // Prepare the statement
+//     $stmt = $conn->prepare($sql);
+//     if ($stmt === false) {
+//         die('Prepare failed: ' . htmlspecialchars($conn->error));
+//     }
+
+//     // Hash the password
+//     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+//     // Bind parameters
+//     $stmt->bind_param("sss", $name, $email, $hashed_password);
+
+//     // Execute the statement
+//     $result = $stmt->execute();
+
+//     // Check for errors and return result
+//     if ($result) {
+//         $stmt->close();
+//         $conn->close();
+//         return true; // User added successfully
+//     } else {
+//         error_log("Error: " . $stmt->error);
+//         $stmt->close();
+//         $conn->close();
+//         return false; // Indicate failure
+//     }
+// }
+
 
     // Check if an email already exists in the database
     public function emailExists($email)
@@ -82,65 +122,65 @@ class User extends db_connection
         }
     }
 
-//     public function addRequest($userID, $role)
-//     {
-//         $ndb = new db_connection();
+    public function addRequest($userID, $role)
+    {
+        $ndb = new db_connection();
 
-//         // Sanitize inputs
-//         $user_id = mysqli_real_escape_string($ndb->db_conn(), $userID);
-//         $role_requested = mysqli_real_escape_string($ndb->db_conn(), $role);
+        // Sanitize inputs
+        $user_id = mysqli_real_escape_string($ndb->db_conn(), $userID);
+        $role_requested = mysqli_real_escape_string($ndb->db_conn(), $role);
 
-//         // SQL query to insert a new customer
-//         $sql = "INSERT INTO `requests` (`user_id`, `role_requested`) 
-//                 VALUES ('$user_id', '$role_requested')";
+        // SQL query to insert a new customer
+        $sql = "INSERT INTO `requests` (`user_id`, `role_requested`) 
+                VALUES ('$user_id', '$role_requested')";
 
-//         // Execute query and return result
-//         return $this->db_query($sql);
-//     }
+        // Execute query and return result
+        return $this->db_query($sql);
+    }
 
-//     public function changeRoleToAdmin($user_id) 
-//     {
-//         $ndb = new db_connection();
+    public function changeRoleToAdmin($user_id) 
+    {
+        $ndb = new db_connection();
 
-//         // SQL query to change the role of a user
-//         $sql = "UPDATE `users` SET `role` = 'administrator' WHERE `user_id` = '$user_id'";
+        // SQL query to change the role of a user
+        $sql = "UPDATE `users` SET `role` = 'administrator' WHERE `user_id` = '$user_id'";
 
-//         // Execute query and return result
-//         return $this->db_query($sql);
-//     }
+        // Execute query and return result
+        return $this->db_query($sql);
+    }
 
-//     public function changeRoleToInvMan($user_id) 
-//     {
-//         $ndb = new db_connection();
+    public function changeRoleToInvMan($user_id) 
+    {
+        $ndb = new db_connection();
 
-//         // SQL query to change the role of a user
-//         $sql = "UPDATE `users` SET `role` = 'inventory manager' WHERE `user_id` = '$user_id'";
+        // SQL query to change the role of a user
+        $sql = "UPDATE `users` SET `role` = 'inventory manager' WHERE `user_id` = '$user_id'";
 
-//         // Execute query and return result
-//         return $this->db_query($sql);
-//     }
+        // Execute query and return result
+        return $this->db_query($sql);
+    }
 
-//     public function changeRoleToSalesPrsnl($user_id) 
-//     {
-//         $ndb = new db_connection();
+    public function changeRoleToSalesPrsnl($user_id) 
+    {
+        $ndb = new db_connection();
 
-//         // SQL query to change the role of a user
-//         $sql = "UPDATE `users` SET `role` = 'sales personnel' WHERE `user_id` = '$user_id'";
+        // SQL query to change the role of a user
+        $sql = "UPDATE `users` SET `role` = 'sales personnel' WHERE `user_id` = '$user_id'";
 
-//         // Execute query and return result
-//         return $this->db_query($sql);
-//     }
+        // Execute query and return result
+        return $this->db_query($sql);
+    }
 
-//     public function changeRoleToCustomer($user_id) 
-//     {
-//         $ndb = new db_connection();
+    public function changeRoleToCustomer($user_id) 
+    {
+        $ndb = new db_connection();
 
-//         // SQL query to change the role of a user
-//         $sql = "UPDATE `users` SET `role` = 'customer' WHERE `user_id` = '$user_id'";
+        // SQL query to change the role of a user
+        $sql = "UPDATE `users` SET `role` = 'customer' WHERE `user_id` = '$user_id'";
 
-//         // Execute query and return result
-//         return $this->db_query($sql);
-//     }
+        // Execute query and return result
+        return $this->db_query($sql);
+    }
 
 }
 

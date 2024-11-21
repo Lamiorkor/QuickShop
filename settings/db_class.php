@@ -67,7 +67,7 @@ class db_connection
 			
 			if ($this->results == false) {
 				return false;
-			}else{
+			} else {
 				return true;
 			}
 		}

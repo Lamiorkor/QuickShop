@@ -3,11 +3,11 @@
 require("../settings/db_class.php");
 
 /**
- * Product class to handle brand-related database functions.
+ * Product class to handle product-related database functions.
  */
 class Product extends db_connection
 {
-    // Add a new brand to the database
+    // Add a new product to the database
     public function addProduct($pname, $description, $price, $stock_qty)
     {
         $ndb = new db_connection();
