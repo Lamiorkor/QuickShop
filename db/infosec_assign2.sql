@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 21, 2024 at 09:35 PM
+-- Generation Time: Nov 21, 2024 at 10:42 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -65,6 +65,18 @@ CREATE TABLE `products` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `requests`
+--
+
+CREATE TABLE `requests` (
+  `request_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `role_requested` enum('administrator','inventory manager','sales personnel','customer') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -73,7 +85,7 @@ CREATE TABLE `users` (
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role` enum('administrator','sales personnel','inventory manager','customer') NOT NULL
+  `role` enum('administrator','inventory manager','sales personnel','customer') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -81,7 +93,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `role`) VALUES
-(1, 'Janet Boye', 'jboye@gmail.com', '$2y$10$ZSJU8qnX20fgQH4Z1PhKa.TyU1AgCcW1nEcIGc210Z0WUFMLEdQGm', 'customer');
+(1, 'Janet Boye', 'jboye@gmail.com', '$2y$10$ZSJU8qnX20fgQH4Z1PhKa.TyU1AgCcW1nEcIGc210Z0WUFMLEdQGm', 'customer'),
+(2, 'Akos Asante', 'aasante@hotmail.com', '$2y$10$GN5SFNPPVPKaCVJ1em9s4uithyE8Z1vaiILthATvgaFYGGt9xnXKq', 'customer');
 
 --
 -- Indexes for dumped tables
@@ -105,6 +118,13 @@ ALTER TABLE `order_details`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`product_id`);
+
+--
+-- Indexes for table `requests`
+--
+ALTER TABLE `requests`
+  ADD PRIMARY KEY (`request_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `users`
@@ -136,10 +156,16 @@ ALTER TABLE `products`
   MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `requests`
+--
+ALTER TABLE `requests`
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Constraints for dumped tables
@@ -150,6 +176,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+
+--
+-- Constraints for table `requests`
+--
+ALTER TABLE `requests`
+  ADD CONSTRAINT `requests_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

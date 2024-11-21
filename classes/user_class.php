@@ -12,15 +12,15 @@ class User extends db_connection
     {
         $ndb = new db_connection();
 
-        echo "now number 5";
-        exit();
-
         // Sanitize inputs
         $user_name = mysqli_real_escape_string($ndb->db_conn(), $name);
         $user_email = mysqli_real_escape_string($ndb->db_conn(), $email);
         $user_password = mysqli_real_escape_string($ndb->db_conn(), $password);
 
         $hashed_password = password_hash($user_password, PASSWORD_DEFAULT);
+
+        echo "I never wanna hear you sayyy";
+        exit();
 
         // SQL query to insert a new customer
         $sql = "INSERT INTO `users` (`name`, `email`, `password`, `role`) 
