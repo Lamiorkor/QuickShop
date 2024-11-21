@@ -17,9 +17,6 @@ if (isset($_POST['signup'])) {
     // Call registerController
     $registerUser = registerController($name, $email, $hashed_password);
 
-    echo "now number 5";
-    exit();
-
     // Call addRequestController
     //$role_request = addRequestController($user_id, $requested_role);
 

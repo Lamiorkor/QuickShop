@@ -12,6 +12,9 @@ class User extends db_connection
     {
         $ndb = new db_connection();
 
+        echo "now number 5";
+        exit();
+
         // Sanitize inputs
         $user_name = mysqli_real_escape_string($ndb->db_conn(), $name);
         $user_email = mysqli_real_escape_string($ndb->db_conn(), $email);
@@ -141,7 +144,7 @@ class User extends db_connection
 
 }
 
-// $user = new User();
-// var_dump($user->addUser("Akos Asante", "aasante@hotmail.com", "@asante098"));
-// exit();
+$user = new User();
+var_dump($user->addUser("Akos Asante", "aasante@hotmail.com", "@asante098"));
+exit();
 ?>
