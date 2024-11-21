@@ -14,11 +14,11 @@ if (isset($_POST['signup'])) {
 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    echo "ain't nothing but a mistake";
-    exit();
-
     // Call registerController
     $registerUser = registerController($name, $email, $hashed_password);
+
+    echo "now number 5";
+    exit();
 
     // Call addRequestController
     //$role_request = addRequestController($user_id, $requested_role);
