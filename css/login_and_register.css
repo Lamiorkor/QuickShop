@@ -53,6 +53,20 @@ input {
     border-radius: 5px;
 }
 
+select {
+    width: 65%;
+    height: 40px;
+    background: #e0dede;
+    justify-content: center;
+    display: flex;
+    margin: 20px auto;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+}
+
+
 button {
     width: 60%;
     height: 40px;

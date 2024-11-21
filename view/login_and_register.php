@@ -20,6 +20,12 @@
                 <input type="email" name ="email" placeholder="Enter email"  pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required="">
                 <input type="password" id="password" name ="password" placeholder="Enter Password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" required="">
                 <input type="password" id="passwordRetype" name="passwordRetype" placeholder="Retype Password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" required>
+                <select name="rolerequest" id="rolerequest" placeholder="You can request a role to be upgraded to">
+                    <option value="administrator">Admin</option>
+                    <option value="inventory manager">Inventory Manager</option>
+                    <option value="sales personnel">Sales Personnel</option>
+                    <option value="customer">Customer</option>
+                </select>
                 <button type="submit" name="signup">Sign Up</button>
             </form>
         </div>

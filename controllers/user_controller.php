@@ -18,35 +18,44 @@ function loginController($email, $password) {
     return $old_user->login($email, $password); 
 }
 
+function addRequestController($user_id, $role) {
+    // Create an instance of the Request class
+    $new_request = new User();
+
+    // Return the addRequest method
+    return $new_request->addRequest($user_id, $role);
+}
+
 function changeRoleToAdminController($user_id) {
-    // Create an instance of the User class
-    $user = new User();
+    // Create an instance of the Request class
+    $request = new User();
 
     // Return the changeUserRoleToAdmin method
-    return $user->changeRoleToAdmin($user_id);
+    return $request->changeRoleToAdmin($user_id);
 }
 
 function changeRoleToInvManController($user_id) {
-    // Create an instance of the User class
-    $user = new User();
+    // Create an instance of the Request class
+    $request = new User();
 
     // Return the changeUserRoleToAdmin method
-    return $user->changeRoleToInvMan($user_id);
+    return $request->changeRoleToInvMan($user_id);
 }
 
 function changeRoleToSalesPnlController($user_id) {
-    // Create an instance of the User class
-    $user = new User();
+    // Create an instance of the Request class
+    $request = new User();
 
     // Return the changeUserRoleToAdmin method
-    return $user->changeRoleToSalesPnl($user_id);
+    return $request->changeRoleToSalesPnl($user_id);
 }
 
 function changeRoleToCustomerController($user_id) {
-    // Create an instance of the User class
-    $user = new User();
+    // Create an instance of the Request class
+    $request = new User();
 
     // Return the changeUserRoleToAdmin method
-    return $user->changeRoleToCustomer($user_id);
+    return $request->changeRoleToCustomer($user_id);
 }
+
 ?>

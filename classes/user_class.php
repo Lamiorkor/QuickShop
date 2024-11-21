@@ -79,7 +79,24 @@ class User extends db_connection
         }
     }
 
-    public function changeRoleToAdmin($user_id) {
+    public function addRequest($userID, $role)
+    {
+        $ndb = new db_connection();
+
+        // Sanitize inputs
+        $user_id = mysqli_real_escape_string($ndb->db_conn(), $userID);
+        $role_requested = mysqli_real_escape_string($ndb->db_conn(), $role);
+
+        // SQL query to insert a new customer
+        $sql = "INSERT INTO `requests` (`user_id`, `role_requested`) 
+                VALUES ('$user_id', '$role_requested')";
+
+        // Execute query and return result
+        return $this->db_query($sql);
+    }
+
+    public function changeRoleToAdmin($user_id) 
+    {
         $ndb = new db_connection();
 
         // SQL query to change the role of a user
@@ -89,7 +106,8 @@ class User extends db_connection
         return $this->db_query($sql);
     }
 
-    public function changeRoleToInvMan($user_id) {
+    public function changeRoleToInvMan($user_id) 
+    {
         $ndb = new db_connection();
 
         // SQL query to change the role of a user
@@ -99,7 +117,8 @@ class User extends db_connection
         return $this->db_query($sql);
     }
 
-    public function changeRoleToSalesPnl($user_id) {
+    public function changeRoleToSalesPnl($user_id) 
+    {
         $ndb = new db_connection();
 
         // SQL query to change the role of a user
@@ -109,7 +128,8 @@ class User extends db_connection
         return $this->db_query($sql);
     }
 
-    public function changeRoleToCustomer($user_id) {
+    public function changeRoleToCustomer($user_id) 
+    {
         $ndb = new db_connection();
 
         // SQL query to change the role of a user
@@ -118,6 +138,7 @@ class User extends db_connection
         // Execute query and return result
         return $this->db_query($sql);
     }
+
 }
 
 ?>
