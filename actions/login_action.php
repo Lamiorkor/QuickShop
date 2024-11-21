@@ -2,34 +2,71 @@
 
 session_start();
 
-include "../settings/db_class.php";
+include ("../controllers/user_controller.php");
 
-if(isset($_POST['login'])) {
-    $email = mysqli_real_escape_string($con, $_POST['email']);
-    $password = mysqli_real_escape_string($con,$_POST['password']);
+// Check if form is submitted
+if (isset($_POST['signup'])) {
+    // Check if email and password are set and not empty
+    if (isset($_POST['email']) && isset($_POST['password']) && !empty($_POST['email']) && !empty($_POST['password'])) {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
 
-    $sql = "SELECT * FROM Seamstress WHERE email = '$email'";
+        // Login user
+        $user = loginController($email, $password);
 
-    $result = mysqli_query($con, $sql);
+        // Check if login was successful
+        if ($user !== false) {
+            // Start session
+            session_start();
 
-    if (mysqli_num_rows($result)> 0) {
-        $row = mysqli_fetch_assoc($result);
+            // Store user data in session
+            $_SESSION['user_id'] = $user['customer_id'];
+            $_SESSION['user_email'] = $user['customer_email'];
+            $_SESSION['user_name'] = $user['customer_name'];
+            $_SESSION['user_role'] = $user['user_role'];
 
-        if (password_verify($password, $row['password'])) {
-            $_SESSION['user_id'] = $row['pid'];
+            if ($_SESSION['user_role'] == 'administrator') {
+                header("Location: ../view/admin_dashboard.php");
+                exit();
+            }
 
-            header("Location: ../admin/dashboard.php");
+            elseif ($_SESSION['user_role'] == 'inventory manager') {
+                header("Location: ../view/inventory_dashboard.php");
+                exit();
+            }
+
+            elseif ($_SESSION['user_role'] == 'customer') {
+                header("Location: ../view/customer_dashboard.php");
+                exit();
+            }
+
+            else {
+                header("Location: ../view/customer_dashboard.php");
+                exit();
+            }
+
+
         } else {
-            echo "Error: Incorrect password. Try again.";
-            header("Location: ../login/login_and_register_view.php");
-        }
+            // Redirect back to login page with error message
+            header("Location: ../view/login_and_register.php");
+            //$message = "Error: You are not registered";
+            echo "<script>alert('Error: You are not registered')</script>";
+            exit();
+        } 
     } else {
-        echo "Error: User not found. Sign up to the platform";
-        header("Location:../login/login_and_register_view.php");
+    // Redirect back to login page with error message
+    header("Location: ../view/login_and_register.php");
+    //$message = "Error: Empty fields";
+    echo "<script>alert('Error: Empty fields')</script>";
+    exit();
     }
-    $con->close();
 } else {
-    echo "Error: Login failed";
-    header("Location: ../login/login_and_register_view.php");
+// Redirect back to login page
+header("Location: ../view/login_and_register.php");
+//$message = "Error: Form not submitted";
+echo "<script>alert('Error: Form not submitted')</script>";
+exit();
 }
+
+
 ?>
