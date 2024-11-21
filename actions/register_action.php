@@ -1,29 +1,29 @@
 <?php
-include "../settings/connection.php";
+include ('../controllers/user_controller.php');
 
-if (isset($_POST['signup'])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $fname = mysqli_real_escape_string($con, $_POST['fname']);
-    $lname = mysqli_real_escape_string($con, $_POST['lname']);
+    $name = mysqli_real_escape_string($con, $_POST['name']);
     $email = mysqli_real_escape_string($con, $_POST['email']);
-    $number = mysqli_real_escape_string($con, $_POST['phone_number']);
-    $shop_name = mysqli_real_escape_string($con, $_POST['shop_name']);
-    $shop_location = mysqli_real_escape_string($con, $_POST['shop_location']);
     $password = mysqli_real_escape_string($con, $_POST['password']);
 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    $sql = "INSERT INTO Seamstress (fname, lname, email, phone_number, shop_name, shop_location, password) 
-        VALUES ('$fname', '$lname', '$email', '$number', '$shop_name', '$shop_location', '$hashed_password')";
+     // Call registerController
+     $registerUser = registerController($name, $email, $hashed_password);
 
-    if (mysqli_query($con, $sql)) {
-        header("Location: ../login/login_and_register_view.php");
+
+    // Check if registration was successful
+    if ($registerUser !== false) {
+        // Redirect to login page with success message
+        header("Location:../view/login_and_register.php");
         exit();
     } else {
-        echo "Error. Please try registering again.";
-        header("Location: ../login/login_and_register_view.php");
+        // Redirect to registration page with error message
+        echo "Registration failed. Please try again.";
+        header("Location:../view/login_and_register.php");
         exit();
     }
-
-    $con->close();
 }
+
+?>
