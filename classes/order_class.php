@@ -3,11 +3,6 @@
 require_once ('../settings/db_class.php');
 require_once ('../controllers/user_controller.php');
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-
 
 /**
  * Orders class to handle order-related database functions.

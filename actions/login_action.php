@@ -18,10 +18,10 @@ if (isset($_POST['login'])) {
             session_start();
 
             // Store user data in session
-            $_SESSION['user_id'] = $user['customer_id'];
-            $_SESSION['user_email'] = $user['customer_email'];
-            $_SESSION['user_name'] = $user['customer_name'];
-            $_SESSION['user_role'] = $user['user_role'];
+            $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['user_email'] = $user['email'];
+            $_SESSION['user_name'] = $user['name'];
+            $_SESSION['user_role'] = $user['role'];
 
             if ($_SESSION['user_role'] === 'administrator') {
                 header("Location: ../view/manage_products.php");

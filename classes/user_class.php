@@ -60,8 +60,8 @@ class User extends db_connection
                     // Start a session and store user info
                     session_start();
                     $_SESSION['user_id'] = $row['user_id'];
-                    $_SESSION['user_name'] = $row['user_name'];
-                    $_SESSION['user_email'] = $row['user_email'];
+                    $_SESSION['user_name'] = $row['name'];
+                    $_SESSION['user_email'] = $row['email'];
                     $_SESSION['user_role'] = $row['role'];
 
                     // Return user data
@@ -92,6 +92,22 @@ class User extends db_connection
         }
     
         // Fetch all customers
+        return $ndb->db_fetch_all();
+    }
+
+    public function getAllUsers() 
+    {
+        $ndb = new db_connection();
+
+        // SQL query to select all users
+        $sql = "SELECT * FROM `users`";
+        
+        // Execute the query
+        if (!$ndb->db_query($sql)) {
+            return false; // Return false if query fails
+        }
+
+        // Fetch all users
         return $ndb->db_fetch_all();
     }
     

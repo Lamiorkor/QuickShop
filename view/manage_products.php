@@ -1,8 +1,9 @@
 <?php
 session_start();
-$role = "Administrator"; // Example role, modify based on session value
+$role = $_SESSION['user_role']; // Example role, modify based on session value
 require_once('../controllers/product_controller.php');
 $products = getProductsController(); // Fetch all products
+
 ?>
 
 <!DOCTYPE html>
@@ -25,17 +26,17 @@ $products = getProductsController(); // Fetch all products
                 <a href="admin.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
                     <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
                 </a>
-                <?php if ($role === 'Administrator' || $role === 'Sales Personnel') { ?>
+                <?php if ($role === 'administrator' || $role === 'sales personnel') { ?>
                     <a href="manage_orders.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
                         <i class="fas fa-shopping-cart mr-3"></i> Orders
                     </a>
                 <?php } ?>
-                <?php if ($role === 'Administrator' || $role === 'Inventory Manager') { ?>
+                <?php if ($role === 'administrator' || $role === 'inventory manager') { ?>
                     <a href="manage_products.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
                         <i class="fas fa-box mr-3"></i> Manage Products
                     </a>
                 <?php } ?>
-                <?php if ($role === 'Administrator') { ?>
+                <?php if ($role === 'administrator') { ?>
                     <a href="manage_roles.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
                         <i class="fas fa-users-cog mr-3"></i> Manage Roles
                     </a>
@@ -50,8 +51,8 @@ $products = getProductsController(); // Fetch all products
                 <div class="flex items-center justify-between">
                     <h2 class="text-xl font-semibold">Manage Products</h2>
                     <div class="flex items-center">
-                        <span class="mr-4"><?php echo $_SESSION['admin_name']; ?></span>
-                        <a href="../actions/log_out_action.php" class="text-red-500 hover:text-red-700">
+                        <span class="mr-4"><?php echo $_SESSION['user_name']; ?></span>
+                        <a href="../actions/logout_action.php" class="text-red-500 hover:text-red-700">
                             <i class="fas fa-sign-out-alt"></i> Logout
                         </a>
                     </div>
@@ -87,7 +88,7 @@ $products = getProductsController(); // Fetch all products
                                     <td class="p-3">$<?php echo $product['price']; ?></td>
                                     <td class="p-3"><?php echo $product['stock_qty']; ?></td>
                                     <td class="p-3">
-                                        <form action ="edit_product.php?product_id=$product['product_id']" method = "GET">
+                                        <form action ="edit_product.php" method = "GET">
                                             <input type="hidden" name="product_id" value="<?php echo $product['product_id'];?>">
                                             <button type="submit" class="text-blue-500">Edit</button>
                                         </form>

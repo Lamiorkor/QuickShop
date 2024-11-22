@@ -1,5 +1,5 @@
 <?php
-require_once ('manage_products.php'); // Assume this controller contains a function to get a product by ID
+require_once ('../controllers/product_controller.php');
 
 $product_id = $_GET['product_id'];
 
@@ -9,6 +9,8 @@ $product_name = $product['pname'];
 $description = $product['description'];
 $price = $product['price'];
 $stock_qty = $product['stock_qty'];
+
+$role = "Administrator";
 
 ?>
 
@@ -24,20 +26,37 @@ $stock_qty = $product['stock_qty'];
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
+    <!-- Container with full-screen flex layout -->
     <div class="flex h-screen bg-gray-100">
-
+        
         <!-- Sidebar -->
         <div class="w-64 bg-gray-800">
             <div class="p-6">
                 <h1 class="text-2xl font-bold text-white">Admin Panel</h1>
             </div>
+            <nav class="mt-6">
+                <a href="admin.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
+                    <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
+                </a>
+                <?php if ($role === 'Administrator' || $role === 'Sales Personnel') { ?>
+                    <a href="manage_orders.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
+                        <i class="fas fa-shopping-cart mr-3"></i> Orders
+                    </a>
+                <?php } ?>
+                <?php if ($role === 'Administrator' || $role === 'Inventory Manager') { ?>
+                    <a href="manage_products.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
+                        <i class="fas fa-box mr-3"></i> Manage Products
+                    </a>
+                <?php } ?>
+                <?php if ($role === 'Administrator') { ?>
+                    <a href="manage_roles.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
+                        <i class="fas fa-users-cog mr-3"></i> Manage Roles
+                    </a>
+                <?php } ?>
+            </nav>
         </div>
 
-        <div>
-            <h2>Scroll down to edit product</h2>
-        </div>
-
-        <!-- Main Content -->
+        <!-- Main Content Area -->
         <div class="flex-1 p-6 overflow-y-auto">
             <h2 class="text-2xl font-semibold mb-6">Edit Product</h2>
 
@@ -66,7 +85,7 @@ $stock_qty = $product['stock_qty'];
 
                 <!-- Stock Field -->
                 <div class="mb-4">
-                    <label for="stock" class="block text-gray-700 font-semibold mb-2">Quantity in Stock:</label>
+                    <label for="stock_qty" class="block text-gray-700 font-semibold mb-2">Quantity in Stock:</label>
                     <input type="number" id="stock_qty" name="stock_qty" value="<?php echo htmlspecialchars($stock_qty); ?>" class="form-control block w-full border border-gray-300 rounded-lg p-2">
                 </div>
 
@@ -86,20 +105,13 @@ $stock_qty = $product['stock_qty'];
     </div>
 
     <!-- JavaScript -->
-    <!-- <script>
-        // Redirect to product listing after successful update
-        <?php //if (isset($_GET['success']) && $_GET['success'] == 'true'): ?>
-        
-        window.location.href = '../view/view_product.php';
-        alert('Stock successfully updated! Redirecting to product list.');
-        <?php //endif; ?>
-
+    <script>
         // Cancel action confirmation
         function confirmCancel() {
             if (confirm('Are you sure you want to cancel?')) {
-                window.location.href = '../view/view_product.php';
+                window.location.href = 'manage_products.php';
             }
         }
-    </script> -->
+    </script>
 </body>
 </html>

@@ -55,10 +55,10 @@ $customers = getAllCustomersController();
                 </div>
 
                 <!-- Products Ordered Field -->
-                <div class="mb-4">
+                <!-- <div class="mb-4">
                     <label for="order_date" class="block text-gray-700 font-semibold mb-2">Date Ordered:</label>
                     <date id="order_date" name="order_date" class="form-control block w-full border border-gray-300 rounded-lg p-2 focus:border-blue-500 focus:ring-blue-500" rows="3" required></textarea>
-                </div>
+                </div> -->
 
                 <!-- Total Amount Field -->
                 <div class="mb-4">

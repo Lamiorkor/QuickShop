@@ -1,8 +1,8 @@
 <?php
 session_start();
-$role = "Administrator"; // Example role, modify based on session value
-// require_once('../controllers/user_controller.php');
-// $users = getAllUsers(); // Fetch all users for role management
+$role = $_SESSION['user_role']; // Example role, modify based on session value
+require_once('../controllers/user_controller.php');
+$users = getAllUsersController(); // Fetch all users for role management
 ?>
 
 <!DOCTYPE html>
@@ -25,17 +25,17 @@ $role = "Administrator"; // Example role, modify based on session value
                 <a href="admin.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
                     <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
                 </a>
-                <?php if ($role === 'Administrator' || $role === 'Sales Personnel') { ?>
+                <?php if ($role === 'administrator' || $role === 'sales personnel') { ?>
                     <a href="manage_orders.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
                         <i class="fas fa-shopping-cart mr-3"></i> Orders
                     </a>
                 <?php } ?>
-                <?php if ($role === 'Administrator' || $role === 'Inventory Manager') { ?>
+                <?php if ($role === 'administrator' || $role === 'inventory manager') { ?>
                     <a href="manage_products.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
                         <i class="fas fa-box mr-3"></i> Manage Products
                     </a>
                 <?php } ?>
-                <?php if ($role === 'Administrator') { ?>
+                <?php if ($role === 'administrator') { ?>
                     <a href="manage_roles.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
                         <i class="fas fa-users-cog mr-3"></i> Manage Roles
                     </a>
@@ -50,8 +50,8 @@ $role = "Administrator"; // Example role, modify based on session value
                 <div class="flex items-center justify-between">
                     <h2 class="text-xl font-semibold">Manage Roles</h2>
                     <div class="flex items-center">
-                        <span class="mr-4"><?php echo $_SESSION['admin_name']; ?></span>
-                        <a href="../actions/log_out_action.php" class="text-red-500 hover:text-red-700">
+                        <span class="mr-4"><?php echo $_SESSION['user_name']; ?></span>
+                        <a href="../actions/logout_action.php" class="text-red-500 hover:text-red-700">
                             <i class="fas fa-sign-out-alt"></i> Logout
                         </a>
                     </div>
@@ -60,8 +60,8 @@ $role = "Administrator"; // Example role, modify based on session value
 
             <!-- Roles Content -->
             <main class="p-6">
-                <h3 class="text-lg font-semibold mb-4">User Roles</h3>
-                <div class="bg-white p-6 rounded-lg shadow-sm">
+            <h3 class="text-lg font-semibold mb-4">Manage User Roles and Permissions</h3>
+            <div class="bg-white p-6 rounded-lg shadow-sm">
                     <table class="w-full">
                         <thead>
                             <tr class="bg-gray-50">
@@ -74,17 +74,19 @@ $role = "Administrator"; // Example role, modify based on session value
                         <tbody>
                             <?php foreach ($users as $user) { ?>
                                 <tr class="border-t">
-                                    <td class="p-3"><?php echo $user['id']; ?></td>
-                                    <td class="p-3"><?php echo $user['name']; ?></td>
+                                <td class="p-3"><?php echo $user['user_id']; ?></td>
+                                <td class="p-3"><?php echo $user['name']; ?></td>
                                     <td class="p-3">
                                         <select class="bg-gray-100 p-2 rounded">
-                                            <option value="Administrator" <?php if ($user['role'] === 'Administrator') echo 'selected'; ?>>Administrator</option>
-                                            <option value="Sales Personnel" <?php if ($user['role'] === 'Sales Personnel') echo 'selected'; ?>>Sales Personnel</option>
-                                            <option value="Inventory Manager" <?php if ($user['role'] === 'Inventory Manager') echo 'selected'; ?>>Inventory Manager</option>
+                                            <option value="administrator" <?php echo $user['role'] === 'administrator' ? 'selected' : ''; ?>>Administrator</option>
+                                            <option value="inventory manager" <?php echo $user['role'] === 'inventory manager' ? 'selected' : ''; ?>>Inventory Manager</option>
+                                            <option value="sales personnel" <?php echo $user['role'] === 'sales personnel' ? 'selected' : ''; ?>>Sales Personnel</option>
+                                            <option value="customer" <?php echo $user['role'] === 'customer' ? 'selected' : ''; ?>>Customer</option>                                        
                                         </select>
                                     </td>
                                     <td class="p-3">
-                                        <button class="text-blue-500">Save</button>
+                                        <button class="text-blue-500">Update</button>
+                                        <button class="text-red-500">Delete</button>
                                     </td>
                                 </tr>
                             <?php } ?>

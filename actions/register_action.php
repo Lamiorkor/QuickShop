@@ -1,5 +1,5 @@
 <?php
-include "../controllers/user_controller.php";
+require_once ('../controllers/user_controller.php');
 
 //session_start();
 
@@ -20,7 +20,6 @@ if (isset($_POST['signup'])) {
 
     // Check if registration was successful
     if ($registerUser !== false) {
-        // if($role_request !== null) {
         // Redirect to login page with success message
         header("Location:../view/login_and_register.php");
         exit();

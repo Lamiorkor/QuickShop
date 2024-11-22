@@ -27,8 +27,16 @@ function getAllCustomersController() {
     return $all_customers->getAllCustomers();
 }
 
+function getAllUsersController() {
+    // Create an instance of the User class
+    $users = new User();
+
+    // Return the getAllUsers method
+    return $users->getAllUsers();
+}
+
 function addRequestController($user_id, $role) {
-    // Create an instance of the Request class
+    // Create an instance of the User class
     $new_request = new User();
 
     // Return the addRequest method
@@ -36,7 +44,7 @@ function addRequestController($user_id, $role) {
 }
 
 function changeRoleToAdminController($user_id) {
-    // Create an instance of the Request class
+    // Create an instance of the User class
     $request = new User();
 
     // Return the changeUserRoleToAdmin method
@@ -44,7 +52,7 @@ function changeRoleToAdminController($user_id) {
 }
 
 function changeRoleToInvManController($user_id) {
-    // Create an instance of the Request class
+    // Create an instance of the User class
     $request = new User();
 
     // Return the changeUserRoleToAdmin method
@@ -52,7 +60,7 @@ function changeRoleToInvManController($user_id) {
 }
 
 function changeRoleToSalesPrsnlController($user_id) {
-    // Create an instance of the Request class
+    // Create an instance of the User class
     $request = new User();
 
     // Return the changeUserRoleToAdmin method
@@ -60,7 +68,7 @@ function changeRoleToSalesPrsnlController($user_id) {
 }
 
 function changeRoleToCustomerController($user_id) {
-    // Create an instance of the Request class
+    // Create an instance of the User class
     $request = new User();
 
     // Return the changeUserRoleToAdmin method

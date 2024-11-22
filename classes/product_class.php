@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 // Connect to database class
 require_once("../settings/db_class.php");
 
@@ -40,21 +44,27 @@ class Product extends db_connection
     }
 
     public function getProducts() {
+        // Initialize a new database connection
+        $ndb = new db_connection();
+        
         // Prepare SQL statement
         $sql = "SELECT * FROM `products`";
-    
-        // Execute the query and fetch all results
-        $products = $this->db_fetch_all($sql); 
-    
-        // Check if the query was successful
-        if ($products) {
-            // Return all products as an associative array
-            return $products;
-        } else {
-            // Return an empty array if no results
-            return [];
+        
+        // Execute the query using the db_query method, which assigns the result to $ndb->results
+        if ($ndb->db_query($sql)) {
+            // Fetch all results from the query
+            $products = $ndb->db_fetch_all();
+            
+            // Check if any products were retrieved
+            if ($products) {
+                return $products; // Return the array of products
+            }
         }
+        
+        // Return an empty array if no products found or query failed
+        return [];
     }
+    
 
     public function getOneProduct($productID) {
         $ndb = new db_connection();
@@ -99,8 +109,7 @@ class Product extends db_connection
         return $total_products['total_products'];
         
     }
-
-
     
 }
+
 ?>
