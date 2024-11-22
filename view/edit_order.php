@@ -1,5 +1,6 @@
 <?php
-require_once ('manage_orders.php'); // Assume this controller contains a function to get a product by ID
+session_start();
+require_once ('../controllers/order_controller.php');
 
 $order_id = $_GET['order_id'];
 
@@ -9,6 +10,8 @@ $customer_name = $order['name'];
 $order_date = $order['order_date'];
 $total_amt = $order['total_amount'];
 $status = $product['status'];
+
+$role = $_SESSION['user_role'];
 
 ?>
 
@@ -31,6 +34,26 @@ $status = $product['status'];
             <div class="p-6">
                 <h1 class="text-2xl font-bold text-white">Admin Panel</h1>
             </div>
+            <nav class="mt-6">
+                <a href="admin.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
+                    <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
+                </a>
+                <?php if ($role === 'administrator' || $role === 'sales personnel') { ?>
+                    <a href="manage_orders.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
+                        <i class="fas fa-shopping-cart mr-3"></i> Orders
+                    </a>
+                <?php } ?>
+                <?php if ($role === 'administrator' || $role === 'inventory manager') { ?>
+                    <a href="manage_products.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
+                        <i class="fas fa-box mr-3"></i> Manage Products
+                    </a>
+                <?php } ?>
+                <?php if ($role === 'administrator') { ?>
+                    <a href="manage_roles.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
+                        <i class="fas fa-users-cog mr-3"></i> Manage Roles
+                    </a>
+                <?php } ?>
+            </nav>
         </div>
 
         <div>

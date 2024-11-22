@@ -24,7 +24,7 @@ if (isset($_POST['login'])) {
             $_SESSION['user_role'] = $user['role'];
 
             if ($_SESSION['user_role'] === 'administrator') {
-                header("Location: ../view/manage_products.php");
+                header("Location: ../view/admin.php");
                 exit();
             }
 

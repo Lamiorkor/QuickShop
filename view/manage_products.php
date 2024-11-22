@@ -1,6 +1,6 @@
 <?php
 session_start();
-$role = $_SESSION['user_role']; // Example role, modify based on session value
+$role = $_SESSION['user_role']; 
 require_once('../controllers/product_controller.php');
 $products = getProductsController(); // Fetch all products
 

@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once ('../controllers/product_controller.php');
 
 $product_id = $_GET['product_id'];
@@ -10,7 +11,7 @@ $description = $product['description'];
 $price = $product['price'];
 $stock_qty = $product['stock_qty'];
 
-$role = "Administrator";
+$role = $_SESSION['user_role'];
 
 ?>
 

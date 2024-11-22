@@ -1,7 +1,10 @@
 <?php
+session_start();
 require_once ('../controllers/user_controller.php');
 
 $customers = getAllCustomersController();
+
+$role = $_SESSION['user_role'];
 ?>
 
 
@@ -19,7 +22,31 @@ $customers = getAllCustomersController();
 <body>
     <div class="flex h-screen bg-gray-100">
         <!-- Sidebar -->
-        
+        <div class="w-64 bg-gray-800">
+            <div class="p-6">
+                <h1 class="text-2xl font-bold text-white">Admin Panel</h1>
+            </div>
+            <nav class="mt-6">
+                <a href="admin.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
+                    <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
+                </a>
+                <?php if ($role === 'administrator' || $role === 'sales personnel') { ?>
+                    <a href="manage_orders.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
+                        <i class="fas fa-shopping-cart mr-3"></i> Orders
+                    </a>
+                <?php } ?>
+                <?php if ($role === 'administrator' || $role === 'inventory manager') { ?>
+                    <a href="manage_products.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
+                        <i class="fas fa-box mr-3"></i> Manage Products
+                    </a>
+                <?php } ?>
+                <?php if ($role === 'administrator') { ?>
+                    <a href="manage_roles.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
+                        <i class="fas fa-users-cog mr-3"></i> Manage Roles
+                    </a>
+                <?php } ?>
+            </nav>
+        </div>        
 
         <!-- Main Content -->
         <div class="flex-1 p-6 overflow-y-auto">
