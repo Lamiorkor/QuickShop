@@ -1,6 +1,6 @@
 <?php
 session_start();
-$role = "Administrator"; // Example role, modify based on session value
+$role = "administrator"; // Example role, modify based on session value
 // require_once('../controllers/product_controller.php');
 // $products = getAllProducts(); // Fetch all products
 ?>
