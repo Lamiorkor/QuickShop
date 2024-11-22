@@ -1,6 +1,13 @@
 <?php
 // Connect to database class
-require_once("../settings/db_class.php");
+require_once ('../settings/db_class.php');
+require_once ('../controllers/user_controller.php');
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
 
 /**
  * Orders class to handle order-related database functions.
@@ -65,7 +72,8 @@ class Orders extends db_connection
         $ndb = new db_connection();
 
         // Query to fetch categories
-        $sql = "SELECT * FROM `orders`";
+        $sql = "SELECT `orders`.*, `users`.`name` FROM `orders` 
+                JOIN `users` ON `orders`.`user_id` = `users`.`user_id`";
         $result = mysqli_query($ndb->db_conn(), $sql);
     
         // Initialize an empty array
@@ -79,6 +87,16 @@ class Orders extends db_connection
         }
     
         return $orders;
+    }
+
+    function getOneOrder($order_id) {
+        $ndb = new db_connection();
+
+        // Query to fetch categories
+        $sql = "SELECT `orders`.*, `users`.`name` FROM `orders` 
+                JOIN `users` ON `orders`.`user_id` = `users`.`user_id`
+                WHERE `order_id` = '$order_id'";
+        $result = mysqli_query($ndb->db_conn(), $sql);
     }
 
     function getTotalOrders() {

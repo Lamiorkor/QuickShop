@@ -83,12 +83,12 @@ $orders = getOrdersController(); // Fetch all orders
                             <?php foreach ($orders as $order) { ?>
                                 <tr class="border-t">
                                     <td class="p-3"><?php echo $order['order_id']; ?></td>
-                                    <td class="p-3"><?php echo $order['user_id']; ?></td>
+                                    <td class="p-3"><?php echo $order['name']; ?></td>
                                     <td class="p-3"><?php echo $order['date']; ?></td>
                                     <td class="p-3">$<?php echo $order['total_amount']; ?></td>
                                     <td class="p-3"><?php echo $order['status']; ?></td>
                                     <td class="p-3">
-                                        <form action="../actions/edit_order_action.php" method="POST">
+                                        <form action="edit_order.php" method="POST">
                                             <input type="hidden" name="order_id" value="<?php echo $order['order_id'];?>">
                                             <button class="text-blue-500">Edit</button>
                                         </form>

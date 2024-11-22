@@ -4,8 +4,8 @@ include ('../controllers/order_controller.php');
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve data from form submission
     $customer_id = $_POST['customer'];
-    $order_date = $_POST['order_date'];
-    $totalAmt = $_POST['total_amount'];
+    $order_date = date('Y-m-d H:i:s');
+    $totalAmt = $_POST['amount'];
 
     // Call addOrderController
     $newOrder = addOrderController($customer_id, $order_date, $totalAmt);

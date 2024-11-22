@@ -54,7 +54,7 @@ $customers = getAllCustomersController();
                     </select>
                 </div>
 
-                <!-- Date Ordered Field -->
+                <!-- Products Ordered Field -->
                 <div class="mb-4">
                     <label for="order_date" class="block text-gray-700 font-semibold mb-2">Date Ordered:</label>
                     <date id="order_date" name="order_date" class="form-control block w-full border border-gray-300 rounded-lg p-2 focus:border-blue-500 focus:ring-blue-500" rows="3" required></textarea>
@@ -65,12 +65,6 @@ $customers = getAllCustomersController();
                     <label for="amount" class="block text-gray-700 font-semibold mb-2">Total Amount:</label>
                     <input type="number" id="amount" name="amount" step="0.01" class="form-control block w-full border border-gray-300 rounded-lg p-2 focus:border-blue-500 focus:ring-blue-500" required>
                 </div>
-
-                <!-- Stock Quantity Field -->
-                <!-- <div class="mb-4">
-                    <label for="stock_qty" class="block text-gray-700 font-semibold mb-2">Quantity in Stock:</label>
-                    <input type="number" id="stock_qty" name="stock_qty" class="form-control block w-full border border-gray-300 rounded-lg p-2 focus:border-blue-500 focus:ring-blue-500" required>
-                </div> -->
 
                 <!-- Submit Button -->
                 <div class="flex justify-center gap-4 mt-6">

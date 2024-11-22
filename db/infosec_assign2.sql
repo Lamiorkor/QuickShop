@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 21, 2024 at 10:42 PM
+-- Generation Time: Nov 22, 2024 at 04:11 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -31,8 +31,16 @@ CREATE TABLE `orders` (
   `order_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `date` datetime NOT NULL DEFAULT current_timestamp(),
-  `total_amount` decimal(10,2) NOT NULL
+  `total_amount` decimal(10,2) NOT NULL,
+  `status` enum('pending','completed','delivered','') NOT NULL DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `user_id`, `date`, `total_amount`, `status`) VALUES
+(2, 35, '2024-11-22 16:04:43', 55.30, 'pending');
 
 -- --------------------------------------------------------
 
@@ -61,6 +69,15 @@ CREATE TABLE `products` (
   `price` decimal(10,2) NOT NULL,
   `stock_qty` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`product_id`, `pname`, `description`, `price`, `stock_qty`) VALUES
+(1, 'Fufu', 'A soft round ball of gooey goodness', 25.00, 4),
+(3, 'Jiji', 'Urghhh', 20.00, 4),
+(4, 'Banku', 'FAVE!', 23.40, 100);
 
 -- --------------------------------------------------------
 
@@ -93,8 +110,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `role`) VALUES
-(1, 'Janet Boye', 'jboye@gmail.com', '$2y$10$ZSJU8qnX20fgQH4Z1PhKa.TyU1AgCcW1nEcIGc210Z0WUFMLEdQGm', 'customer'),
-(2, 'Akos Asante', 'aasante@hotmail.com', '$2y$10$GN5SFNPPVPKaCVJ1em9s4uithyE8Z1vaiILthATvgaFYGGt9xnXKq', 'customer');
+(1, 'Janet Boye', 'jboye@gmail.com', '$2y$10$ZSJU8qnX20fgQH4Z1PhKa.TyU1AgCcW1nEcIGc210Z0WUFMLEdQGm', 'administrator'),
+(2, 'Akos Asante', 'aasante@hotmail.com', '$2y$10$GN5SFNPPVPKaCVJ1em9s4uithyE8Z1vaiILthATvgaFYGGt9xnXKq', 'inventory manager'),
+(30, 'Akos Asante', 'aaasante@hotmail.com', '$2y$10$uHrTuNEKIS/4duqbVFZGHeI59EX33dK/REYn2GG/DYYvgEEoXNS8y', 'customer'),
+(33, 'Henry Hart', 'hartinator@gmail.com', '$2y$10$g5iJ.2H29HaVSp6CMIDiQelN1mSZ0cz.kQSqoNvoV/dhDfUu5lb9K', 'sales personnel'),
+(34, 'Jim Jazzie', 'jjce@jimmy-jazz.com', '$2y$10$hre8JGjGFWj2pbkk9NKKAeU/Ok0YHtz/AVY.1Mka7dam/gOWk3QXW', 'administrator'),
+(35, 'Prof J', 'jisthebest@gmail.com', '$2y$10$cj4/N5wUGv7vdwQ58/sGKewjAsxbxqr6/RRXKVZMZkELUrQfQWa2i', 'customer');
 
 --
 -- Indexes for dumped tables
@@ -141,7 +162,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `order_details`
@@ -153,7 +174,7 @@ ALTER TABLE `order_details`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `requests`
@@ -165,7 +186,7 @@ ALTER TABLE `requests`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- Constraints for dumped tables

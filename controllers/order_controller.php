@@ -33,6 +33,14 @@ function getOrdersController() {
     return $orders->getOrders();
 }
 
+function getOneOrderController($orderID) {
+    // Create an instance of the Order class
+    $order = new Orders();
+
+    // Return the getOneOrder method
+    return $order->getOneOrder($orderID);
+}
+
 function getTotalOrdersCount(){
     // Create an instance of the Order class
     $order = new Orders();

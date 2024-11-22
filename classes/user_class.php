@@ -79,16 +79,22 @@ class User extends db_connection
         }
     }
 
-    public function getAllCustomers() {
+    public function getAllCustomers()
+    {
         $ndb = new db_connection();
-
+    
         // SQL query to select all customers
         $sql = "SELECT * FROM `users` WHERE `role` = 'customer'";
-        $result = $ndb->db_query($sql);
-
-        // Return the result as an associative array
-        return $this->db_fetch_all($result);
+        
+        // Execute the query
+        if (!$ndb->db_query($sql)) {
+            return false; // Return false if query fails
+        }
+    
+        // Fetch all customers
+        return $ndb->db_fetch_all();
     }
+    
 
     public function addRequest($userID, $role)
     {

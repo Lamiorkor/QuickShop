@@ -111,22 +111,23 @@ if (!class_exists('db_connection')) {
 			return mysqli_fetch_assoc($this->results);
 		}
 
-		//fetch all data
+		// Modify db_fetch_all in the db_class file
 		/**
-		 *get select data
-		 *@return all record
-		 **/
-		function db_fetch_all($sql)
+		 * Fetch all data from a query result
+		 * @param $result - MySQLi result object
+		 * @return array|false - Associative array of records, or false on failure
+		 */
+		function db_fetch_all()
 		{
-
-			// if executing query returns false
-			if (!$this->db_query($sql)) {
+			// Ensure there's a valid result
+			if (!$this->results) {
 				return false;
 			}
-			//return all record
+		
+			// Fetch all records as an associative array
 			return mysqli_fetch_all($this->results, MYSQLI_ASSOC);
 		}
-
+		
 
 		//count data
 		/**
