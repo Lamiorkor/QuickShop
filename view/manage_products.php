@@ -1,8 +1,8 @@
 <?php
 session_start();
-$role = "administrator"; // Example role, modify based on session value
-// require_once('../controllers/product_controller.php');
-// $products = getAllProducts(); // Fetch all products
+$role = "Administrator"; // Example role, modify based on session value
+require_once('../controllers/product_controller.php');
+$products = getProductsController(); // Fetch all products
 ?>
 
 <!DOCTYPE html>
@@ -72,23 +72,29 @@ $role = "administrator"; // Example role, modify based on session value
                             <tr class="bg-gray-50">
                                 <th class="p-3 text-left">Product ID</th>
                                 <th class="p-3 text-left">Name</th>
-                                <th class="p-3 text-left">Category</th>
+                                <th class="p-3 text-left">Description</th>
                                 <th class="p-3 text-left">Price</th>
-                                <th class="p-3 text-left">Stock</th>
+                                <th class="p-3 text-left">Stock Quantity</th>
                                 <th class="p-3 text-left">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($products as $product) { ?>
                                 <tr class="border-t">
-                                    <td class="p-3"><?php echo $product['id']; ?></td>
-                                    <td class="p-3"><?php echo $product['name']; ?></td>
-                                    <td class="p-3"><?php echo $product['category']; ?></td>
+                                    <td class="p-3"><?php echo $product['product_id']; ?></td>
+                                    <td class="p-3"><?php echo $product['pname']; ?></td>
+                                    <td class="p-3"><?php echo $product['description']; ?></td>
                                     <td class="p-3">$<?php echo $product['price']; ?></td>
-                                    <td class="p-3"><?php echo $product['stock']; ?></td>
+                                    <td class="p-3"><?php echo $product['stock_qty']; ?></td>
                                     <td class="p-3">
-                                        <button class="text-blue-500">Edit</button>
-                                        <button class="text-red-500">Delete</button>
+                                        <form action ="edit_product.php?product_id=$product['product_id']" method = "GET">
+                                            <input type="hidden" name="product_id" value="<?php echo $product['product_id'];?>">
+                                            <button type="submit" class="text-blue-500">Edit</button>
+                                        </form>
+                                        <form action = "../actions/delete_product_action.php" method = "POST">
+                                            <input type="hidden" name="product_id" value="<?php echo $product['product_id'];?>">
+                                            <button class="text-red-500">Delete</button>
+                                        </form>
                                     </td>
                                 </tr>
                             <?php } ?>

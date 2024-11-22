@@ -19,6 +19,14 @@ function loginController($email, $password) {
     return $old_user->login($email, $password); 
 }
 
+function getAllCustomersController() {
+    // Create an instance of the User class
+    $all_customers = new User();
+
+    // Return the getAllCustomers method
+    return $all_customers->getAllCustomers();
+}
+
 function addRequestController($user_id, $role) {
     // Create an instance of the Request class
     $new_request = new User();

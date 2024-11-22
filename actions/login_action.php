@@ -1,11 +1,9 @@
 <?php
 
-session_start();
-
-include ("../controllers/user_controller.php");
+include "../controllers/user_controller.php";
 
 // Check if form is submitted
-if (isset($_POST['signup'])) {
+if (isset($_POST['login'])) {
     // Check if email and password are set and not empty
     if (isset($_POST['email']) && isset($_POST['password']) && !empty($_POST['email']) && !empty($_POST['password'])) {
         $email = $_POST['email'];
@@ -25,23 +23,23 @@ if (isset($_POST['signup'])) {
             $_SESSION['user_name'] = $user['customer_name'];
             $_SESSION['user_role'] = $user['user_role'];
 
-            if ($_SESSION['user_role'] == 'administrator') {
-                header("Location: ../view/admin_dashboard.php");
+            if ($_SESSION['user_role'] === 'administrator') {
+                header("Location: ../view/manage_products.php");
                 exit();
             }
 
-            elseif ($_SESSION['user_role'] == 'inventory manager') {
-                header("Location: ../view/inventory_dashboard.php");
+            elseif ($_SESSION['user_role'] === 'inventory manager') {
+                header("Location: ../view/manage_products.php");
                 exit();
             }
 
-            elseif ($_SESSION['user_role'] == 'customer') {
-                header("Location: ../view/customer_dashboard.php");
+            elseif ($_SESSION['user_role'] === 'sales personnel') {
+                header("Location: ../view/manage_orders.php");
                 exit();
             }
 
             else {
-                header("Location: ../view/customer_dashboard.php");
+                header("Location: ../view/home.php");
                 exit();
             }
 

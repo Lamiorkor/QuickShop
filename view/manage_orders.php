@@ -1,8 +1,9 @@
 <?php
 session_start();
 $role = "Administrator"; // Example role, modify based on session value
-// require_once('../controllers/order_controller.php');
-// $orders = getAllOrders(); // Fetch all orders
+require_once('../controllers/order_controller.php');
+$orders = getOrdersController(); // Fetch all orders
+
 ?>
 
 <!DOCTYPE html>
@@ -50,7 +51,7 @@ $role = "Administrator"; // Example role, modify based on session value
                 <div class="flex items-center justify-between">
                     <h2 class="text-xl font-semibold">Orders</h2>
                     <div class="flex items-center">
-                        <span class="mr-4"><?php echo $_SESSION['admin_name']; ?></span>
+                        <span class="mr-4"><?php echo $_SESSION['user_name']; ?></span>
                         <a href="../actions/log_out_action.php" class="text-red-500 hover:text-red-700">
                             <i class="fas fa-sign-out-alt"></i> Logout
                         </a>
@@ -72,7 +73,8 @@ $role = "Administrator"; // Example role, modify based on session value
                             <tr class="bg-gray-50">
                                 <th class="p-3 text-left">Order ID</th>
                                 <th class="p-3 text-left">Customer</th>
-                                <th class="p-3 text-left">Total</th>
+                                <th class="p-3 text-left">Date Ordered</th>
+                                <th class="p-3 text-left">Total Amount</th>
                                 <th class="p-3 text-left">Status</th>
                                 <th class="p-3 text-left">Actions</th>
                             </tr>
@@ -80,13 +82,20 @@ $role = "Administrator"; // Example role, modify based on session value
                         <tbody>
                             <?php foreach ($orders as $order) { ?>
                                 <tr class="border-t">
-                                    <td class="p-3"><?php echo $order['id']; ?></td>
-                                    <td class="p-3"><?php echo $order['customer_name']; ?></td>
-                                    <td class="p-3">$<?php echo $order['total']; ?></td>
+                                    <td class="p-3"><?php echo $order['order_id']; ?></td>
+                                    <td class="p-3"><?php echo $order['user_id']; ?></td>
+                                    <td class="p-3"><?php echo $order['date']; ?></td>
+                                    <td class="p-3">$<?php echo $order['total_amount']; ?></td>
                                     <td class="p-3"><?php echo $order['status']; ?></td>
                                     <td class="p-3">
-                                        <button class="text-blue-500">Edit</button>
-                                        <button class="text-red-500">Delete</button>
+                                        <form action="../actions/edit_order_action.php" method="POST">
+                                            <input type="hidden" name="order_id" value="<?php echo $order['order_id'];?>">
+                                            <button class="text-blue-500">Edit</button>
+                                        </form>
+                                        <form action="../actions/delete_order_action.php" method="POST">
+                                            <input type="hidden" name="order_id" value="<?php echo $order['order_id'];?>">
+                                            <button class="text-red-500">Delete</button>
+                                        </form>
                                     </td>
                                 </tr>
                             <?php } ?>

@@ -3,25 +3,24 @@ include ('../controllers/product_controller.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve data from form submission
-    $productName = $_POST['serviceName'];
-    $serviceCategory = $_POST['serviceCategory'];
-    $servicePrice = $_POST['servicePrice'];
-    $serviceDescription = $_POST['serviceDesc'];
-    $serviceKeywords = $_POST['serviceKeywords'];
+    $productName = $_POST['pname'];
+    $productDescription = $_POST['description'];
+    $productPrice = $_POST['price'];
+    $qty = $_POST['stock_qty'];
 
-    // Call serviceController
-    $newService = addServiceController($serviceName, $serviceCategory, $servicePrice, $serviceDescription, $serviceKeywords);
+    // Call addProductController
+    $newProduct = addProductController($productName, $productDescription, $productPrice, $qty);
 
     // Check if registration was successful
-    if ($newService !== false) {
-        // Redirect to service page with success message
-        echo "Service added successfully!";
-        header("Location:../view/services.php");
+    if ($newProduct !== false) {
+        // Redirect to product page with success message
+        echo "Product added successfully!";
+        header("Location:../view/manage_products.php");
         exit();
     } else {
-        // Redirect to service page with error message
-        echo "Addition of service failed. Please try again.";
-        header("Location:../view/services.php");
+        // Redirect to product page with error message
+        echo "Addition of product failed. Please try again.";
+        header("Location:../view/manage_products.php");
         exit();
     }
 }

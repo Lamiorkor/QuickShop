@@ -68,15 +68,26 @@ class User extends db_connection
                     return $row;
                 } else {
                     // Incorrect password
-                    return "Incorrect Password";
+                    return false;
                 }
             } else {
                 // User not found
-                return "User not found";
+                return false;
             }
         } else {
             return false; // Query failed
         }
+    }
+
+    public function getAllCustomers() {
+        $ndb = new db_connection();
+
+        // SQL query to select all customers
+        $sql = "SELECT * FROM `users` WHERE `role` = 'customer'";
+        $result = $ndb->db_query($sql);
+
+        // Return the result as an associative array
+        return $this->db_fetch_all($result);
     }
 
     public function addRequest($userID, $role)
