@@ -1,5 +1,4 @@
 <?php
-
 require('../classes/otp.php');
 require ('../vendor/autoload.php'); // This automatically includes all the required files
 
