@@ -8,41 +8,58 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Our Store</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <style>
+        body {
+            position: relative;
+        }
+
+        #role-change-form {
+            position: absolute;
+            top: 4.5rem;
+            left: 0.5rem;
+            width: 300px;
+            z-index: 1000;
+        }
+    </style>
+
 </head>
+
 <body class="bg-gray-100 text-gray-800">
 
     <!-- Navbar -->
     <nav class="bg-gray-800 p-4">
-    <div class="container mx-auto flex justify-between items-center">
-        <a href="home.php" class="text-white text-2xl font-bold">QuickShop</a>
-        <div class="flex items-center space-x-4">
-            <a href="home.php" class="text-gray-300 hover:text-white">Home</a>
-            <a href="products.php" class="text-gray-300 hover:text-white">Products</a>
-            <a href="view_orders.php" class="text-gray-300 hover:text-white">Orders</a>
-            <?php if ($user_name): ?>
-                <span class="text-gray-300">Hello, <?php echo $user_name; ?>!</span>
-                <a href="edit_customer.php" class="text-gray-300 hover:text-white">
-                    <i class="fas fa-user-edit"></i> Update Your Account
-                </a>
-                <a href="../actions/logout_action.php" class="text-red-500 hover:text-red-700">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </a>
-            <?php else: ?>
-                <a href="login_and_register.php" class="text-gray-300 hover:text-white">Login/Register</a>
-            <?php endif; ?>
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="home.php" class="text-white text-2xl font-bold">QuickShop</a>
+            <div class="flex items-center space-x-4">
+                <a href="home.php" class="text-gray-300 hover:text-white">Home</a>
+                <a href="products.php" class="text-gray-300 hover:text-white">Products</a>
+                <a href="view_orders.php" class="text-gray-300 hover:text-white">Orders</a>
+                <?php if ($user_name): ?>
+                    <span class="text-gray-300">Hello, <?php echo $user_name; ?>!</span>
+                    <a href="edit_customer.php" class="text-gray-300 hover:text-white">
+                        <i class="fas fa-user-edit"></i> Update Your Account
+                    </a>
+                    <a href="../actions/logout_action.php" class="text-red-500 hover:text-red-700">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                <?php else: ?>
+                    <a href="login_and_register.php" class="text-gray-300 hover:text-white">Login/Register</a>
+                <?php endif; ?>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
 
     <!-- Hero Section -->
-    <header class="bg-cover bg-center h-96" style="background-image: url('hero-image.jpg');">
+    <header class="bg-cover bg-center h-96" style="background-image: url('../images/shiny.jpeg');">
         <div class="bg-black bg-opacity-50 h-full flex items-center justify-center text-center">
             <div>
                 <h1 class="text-5xl font-bold text-white">Discover Unique Products</h1>
@@ -74,7 +91,7 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
     </section>
 
     <!-- Role Change Request Form -->
-    <section class="bg-white p-6 rounded-lg shadow-md mt-6 container mx-auto px-6">
+    <section id="role-change-form" class="absolute top-6 right-6 bg-white p-4 rounded-lg shadow-md">
         <h3 class="text-lg font-semibold mb-4">Request Role Change</h3>
         <form action="../actions/request_role_action.php" method="POST">
             <label for="rolerequest" class="block text-sm font-medium text-gray-700">Request New Role</label>
@@ -85,9 +102,10 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
                 <option value="customer">Customer</option>
             </select>
             <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
-            <button type="submit" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded">Submit Request</button>
+            <button type="submit" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Submit Request</button>
         </form>
     </section>
+
 
     <!-- Footer -->
     <footer class="bg-gray-800 text-gray-300 py-6">
@@ -108,4 +126,5 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
     </footer>
 
 </body>
+
 </html>
