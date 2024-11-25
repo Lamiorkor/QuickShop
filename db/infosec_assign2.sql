@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 25, 2024 at 09:59 PM
+-- Generation Time: Nov 25, 2024 at 11:49 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -64,11 +64,8 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`order_id`, `user_id`, `date`, `total_amount`, `status`) VALUES
-(2, 35, '2024-11-22 16:04:43', 55.30, 'pending'),
-(3, 30, '2024-11-25 01:06:40', 23.00, 'pending'),
-(4, 35, '2024-11-25 02:55:08', 68.40, 'pending'),
-(6, 35, '2024-11-25 03:21:07', 68.40, 'pending'),
-(7, 40, '2024-11-25 20:04:38', 45.00, 'pending');
+(2, 35, '2024-11-22 16:04:43', 55.30, 'completed'),
+(6, 35, '2024-11-25 03:21:07', 68.40, 'pending');
 
 -- --------------------------------------------------------
 
@@ -92,9 +89,8 @@ INSERT INTO `order_details` (`order_detail_id`, `order_id`, `product_id`, `qty`,
 (1, 5, 3, 1, 20.00),
 (2, 5, 4, 1, 23.40),
 (3, 5, 1, 1, 25.00),
-(4, 6, 3, 1, 20.00),
-(5, 6, 4, 1, 23.40),
-(6, 6, 1, 1, 25.00),
+(4, 6, 3, 2, 20.00),
+(5, 6, 4, 4, 23.40),
 (7, 7, 1, 1, 25.00),
 (8, 7, 3, 1, 20.00);
 
@@ -172,8 +168,8 @@ INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `role`, `auth_pin`,
 --
 ALTER TABLE `cart`
   ADD PRIMARY KEY (`cart_id`),
-  ADD KEY `product_id` (`product_id`),
-  ADD KEY `cart_ibfk_2` (`user_id`);
+  ADD KEY `cart_ibfk_2` (`user_id`),
+  ADD KEY `cart_ibfk_1` (`product_id`);
 
 --
 -- Indexes for table `orders`
@@ -187,7 +183,7 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `order_details`
   ADD PRIMARY KEY (`order_detail_id`),
-  ADD KEY `product_id` (`product_id`);
+  ADD KEY `order_details_ibfk_1` (`product_id`);
 
 --
 -- Indexes for table `products`
@@ -235,7 +231,7 @@ ALTER TABLE `order_details`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `requests`
@@ -257,7 +253,7 @@ ALTER TABLE `users`
 -- Constraints for table `cart`
 --
 ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`),
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
 
 --
@@ -270,7 +266,7 @@ ALTER TABLE `orders`
 -- Constraints for table `order_details`
 --
 ALTER TABLE `order_details`
-  ADD CONSTRAINT `order_details_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
+  ADD CONSTRAINT `order_details_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Constraints for table `requests`
