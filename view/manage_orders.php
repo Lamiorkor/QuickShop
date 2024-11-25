@@ -25,9 +25,11 @@ $order_details = getAllOrderDetailsController(); // Fetch all order details
                 <h1 class="text-2xl font-bold text-white">Admin Panel</h1>
             </div>
             <nav class="mt-6">
+            <?php if ($role === 'administrator') { ?>
                 <a href="admin.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
                     <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
                 </a>
+                <?php } ?>
                 <?php if ($role === 'administrator' || $role === 'sales personnel' || $role === 'inventory manager') { ?>
                     <a href="manage_orders.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
                         <i class="fas fa-shopping-cart mr-3"></i> Orders
