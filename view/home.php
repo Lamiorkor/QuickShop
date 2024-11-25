@@ -2,7 +2,12 @@
 session_start();
 require_once('../controllers/product_controller.php');
 $products = getProductsController(); // Fetch all products
+$_SESSION['user_name'] = "Jimmy";
+$_SESSION['user_id'] = 40; 
+$_SESSION['user_role'] = 'customer';
+$_SESSION['user_email'] = "jim.edward@ashesi.edu.gh";
 $user_name = isset($_SESSION['user_name']) ? $_SESSION['user_name'] : null;
+$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +59,6 @@ $user_name = isset($_SESSION['user_name']) ? $_SESSION['user_name'] : null;
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <?php foreach ($products as $product): ?>
                     <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                        <!-- <img src="product-image.jpg" alt="Product Image" class="w-full h-48 object-cover"> -->
                         <div class="p-6">
                             <h3 class="text-xl font-semibold"><?php echo $product['pname']; ?></h3>
                             <p class="text-gray-600"><?php echo $product['description']; ?></p>
@@ -67,6 +71,22 @@ $user_name = isset($_SESSION['user_name']) ? $_SESSION['user_name'] : null;
                 <?php endforeach; ?>
             </div>
         </div>
+    </section>
+
+    <!-- Role Change Request Form -->
+    <section class="bg-white p-6 rounded-lg shadow-md mt-6 container mx-auto px-6">
+        <h3 class="text-lg font-semibold mb-4">Request Role Change</h3>
+        <form action="../actions/request_role_action.php" method="POST">
+            <label for="rolerequest" class="block text-sm font-medium text-gray-700">Request New Role</label>
+            <select name="rolerequest" id="rolerequest" class="mt-1 block w-full p-2 border rounded">
+                <option value="administrator">Administrator</option>
+                <option value="inventory manager">Inventory Manager</option>
+                <option value="sales personnel">Sales Personnel</option>
+                <option value="customer">Customer</option>
+            </select>
+            <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+            <button type="submit" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded">Submit Request</button>
+        </form>
     </section>
 
     <!-- Footer -->

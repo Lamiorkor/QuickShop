@@ -2,7 +2,9 @@
 session_start();
 $role = $_SESSION['user_role']; // Example role, modify based on session value
 require_once('../controllers/user_controller.php');
+require_once('../controllers/product_controller.php'); // Include the product controller
 $users = getAllUsersController(); // Fetch all users for role management
+$roleRequests = getAllRoleRequestsController(); // Fetch all role change requests
 ?>
 
 <!DOCTYPE html>
@@ -60,8 +62,9 @@ $users = getAllUsersController(); // Fetch all users for role management
 
             <!-- Roles Content -->
             <main class="p-6">
-            <h3 class="text-lg font-semibold mb-4">Manage User Roles and Permissions</h3>
-            <div class="bg-white p-6 rounded-lg shadow-sm">
+                <!-- Manage User Roles Table -->
+                <h3 class="text-lg font-semibold mb-4">Manage User Roles and Permissions</h3>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
                     <table class="w-full">
                         <thead>
                             <tr class="bg-gray-50">
@@ -74,8 +77,8 @@ $users = getAllUsersController(); // Fetch all users for role management
                         <tbody>
                             <?php foreach ($users as $user) { ?>
                                 <tr class="border-t">
-                                <td class="p-3"><?php echo $user['user_id']; ?></td>
-                                <td class="p-3"><?php echo $user['name']; ?></td>
+                                    <td class="p-3"><?php echo $user['user_id']; ?></td>
+                                    <td class="p-3"><?php echo $user['name']; ?></td>
                                     <td class="p-3">
                                         <select class="bg-gray-100 p-2 rounded">
                                             <option value="administrator" <?php echo $user['role'] === 'administrator' ? 'selected' : ''; ?>>Administrator</option>
@@ -85,8 +88,50 @@ $users = getAllUsersController(); // Fetch all users for role management
                                         </select>
                                     </td>
                                     <td class="p-3">
-                                        <button class="text-blue-500">Update</button>
-                                        <button class="text-red-500">Delete</button>
+                                        <form action="../actions/change_role_action.php" method="POST" style="display: inline;">
+                                            <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
+                                            <input type="hidden" name="role" value="<?php echo $user['role']; ?>">
+                                            <button type="submit" name="action" value="approve" class="text-blue-500">Update</button>
+                                        </form>
+                                        <form action="../actions/delete_user_action.php" method="POST" style="display: inline;">
+                                            <input type="hidden" name="user_id" value="<?php echo $request['user_id']; ?>">
+                                            <button type="submit" name="action" value="delete" class="text-red-500">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Role Change Requests Table -->
+                <div class="bg-white p-6 rounded-lg shadow-md mt-6">
+                    <h3 class="text-lg font-semibold mb-4">Role Change Requests</h3>
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-gray-50">
+                                <th class="p-3 text-left">User ID</th>
+                                <th class="p-3 text-left">User Name</th>
+                                <th class="p-3 text-left">Requested Role</th>
+                                <th class="p-3 text-left">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($roleRequests as $request) { ?>
+                                <tr class="border-t">
+                                    <td class="p-3"><?php echo $request['user_id']; ?></td>
+                                    <td class="p-3"><?php echo $request['name']; ?></td>
+                                    <td class="p-3"><?php echo $request['role_requested']; ?></td>
+                                    <td class="p-3">
+                                        <form action="../actions/handle_role_request_action.php" method="POST" style="display: inline;">
+                                            <input type="hidden" name="user_id" value="<?php echo $request['user_id']; ?>">
+                                            <input type="hidden" name="role" value="<?php echo $request['role_requested']; ?>">
+                                            <button type="submit" name="action" value="approve" class="text-green-500">Approve</button>
+                                        </form>
+                                        <form action="../actions/handle_role_request_action.php" method="POST" style="display: inline;">
+                                            <input type="hidden" name="user_id" value="<?php echo $request['user_id']; ?>">
+                                            <button type="submit" name="action" value="deny" class="text-red-500">Deny</button>
+                                        </form>
                                     </td>
                                 </tr>
                             <?php } ?>
