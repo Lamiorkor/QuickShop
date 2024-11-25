@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 22, 2024 at 04:11 PM
+-- Generation Time: Nov 25, 2024 at 06:56 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -24,6 +24,28 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `cart`
+--
+
+CREATE TABLE `cart` (
+  `cart_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `qty` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`cart_id`, `user_id`, `product_id`, `qty`) VALUES
+(2, 35, 3, 1),
+(3, 35, 4, 1),
+(4, 35, 1, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `orders`
 --
 
@@ -32,7 +54,7 @@ CREATE TABLE `orders` (
   `user_id` int(11) NOT NULL,
   `date` datetime NOT NULL DEFAULT current_timestamp(),
   `total_amount` decimal(10,2) NOT NULL,
-  `status` enum('pending','completed','delivered','') NOT NULL DEFAULT 'pending'
+  `status` enum('pending','completed','collected','cancelled') NOT NULL DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -40,7 +62,10 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`order_id`, `user_id`, `date`, `total_amount`, `status`) VALUES
-(2, 35, '2024-11-22 16:04:43', 55.30, 'pending');
+(2, 35, '2024-11-22 16:04:43', 55.30, 'pending'),
+(3, 30, '2024-11-25 01:06:40', 23.00, 'pending'),
+(4, 35, '2024-11-25 02:55:08', 68.40, 'pending'),
+(6, 35, '2024-11-25 03:21:07', 68.40, 'pending');
 
 -- --------------------------------------------------------
 
@@ -55,6 +80,18 @@ CREATE TABLE `order_details` (
   `qty` int(11) NOT NULL,
   `price` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `order_details`
+--
+
+INSERT INTO `order_details` (`order_detail_id`, `order_id`, `product_id`, `qty`, `price`) VALUES
+(1, 5, 3, 1, 20.00),
+(2, 5, 4, 1, 23.40),
+(3, 5, 1, 1, 25.00),
+(4, 6, 3, 1, 20.00),
+(5, 6, 4, 1, 23.40),
+(6, 6, 1, 1, 25.00);
 
 -- --------------------------------------------------------
 
@@ -76,7 +113,7 @@ CREATE TABLE `products` (
 
 INSERT INTO `products` (`product_id`, `pname`, `description`, `price`, `stock_qty`) VALUES
 (1, 'Fufu', 'A soft round ball of gooey goodness', 25.00, 4),
-(3, 'Jiji', 'Urghhh', 20.00, 4),
+(3, 'Jiji', 'Not bad...', 20.00, 10),
 (4, 'Banku', 'FAVE!', 23.40, 100);
 
 -- --------------------------------------------------------
@@ -110,16 +147,26 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `role`) VALUES
-(1, 'Janet Boye', 'jboye@gmail.com', '$2y$10$ZSJU8qnX20fgQH4Z1PhKa.TyU1AgCcW1nEcIGc210Z0WUFMLEdQGm', 'administrator'),
+(1, 'Janet Boye', 'jboye@gmail.com', '$2y$10$xDOYgHyPe8OvRFFi7.abN.iDzHQ2PDSrGKzOVx.cGK.Aa09XvYL3u', 'administrator'),
 (2, 'Akos Asante', 'aasante@hotmail.com', '$2y$10$GN5SFNPPVPKaCVJ1em9s4uithyE8Z1vaiILthATvgaFYGGt9xnXKq', 'inventory manager'),
 (30, 'Akos Asante', 'aaasante@hotmail.com', '$2y$10$uHrTuNEKIS/4duqbVFZGHeI59EX33dK/REYn2GG/DYYvgEEoXNS8y', 'customer'),
 (33, 'Henry Hart', 'hartinator@gmail.com', '$2y$10$g5iJ.2H29HaVSp6CMIDiQelN1mSZ0cz.kQSqoNvoV/dhDfUu5lb9K', 'sales personnel'),
 (34, 'Jim Jazzie', 'jjce@jimmy-jazz.com', '$2y$10$hre8JGjGFWj2pbkk9NKKAeU/Ok0YHtz/AVY.1Mka7dam/gOWk3QXW', 'administrator'),
-(35, 'Prof J', 'jisthebest@gmail.com', '$2y$10$cj4/N5wUGv7vdwQ58/sGKewjAsxbxqr6/RRXKVZMZkELUrQfQWa2i', 'customer');
+(35, 'Prof J', 'jisthebest@gmail.com', '$2y$10$JAkZxlufUxLtKVGyDhHk/.B2soaIh0DJAWqCTr9MtjQc/aUloUvHy', 'customer'),
+(36, 'Favour', 'favoured@gmail.com', '$2y$10$zoxF4UejSVKZh3/6WB5Z3OEaJWJJoS7d5Z.xhu8KSD3H3u91THkpW', 'customer'),
+(40, 'Jimmy', 'jim.edward@ashesi.edu.gh', '$2y$10$sUbsodz648DjX3t2xBLa6uPbHa7CYndxfGAibutQL0.mAJpEZeNGS', 'customer');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`cart_id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `orders`
@@ -159,16 +206,22 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `order_detail_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -186,11 +239,18 @@ ALTER TABLE `requests`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `cart`
+--
+ALTER TABLE `cart`
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`),
+  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 
 --
 -- Constraints for table `orders`
