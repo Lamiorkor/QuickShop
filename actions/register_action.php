@@ -7,16 +7,9 @@ if (isset($_POST['signup'])) {
     $name = $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-    // $requested_role = $_POST['rolerequest'];
-    // $user_id = $_SESSION['user_id'];
-
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // Call registerController
-    $registerUser = registerController($name, $email, $hashed_password);
-
-    // Call addRequestController
-    //$role_request = addRequestController($user_id, $requested_role);
+    $registerUser = registerController($name, $email, $password);
 
     // Check if registration was successful
     if ($registerUser !== false) {
@@ -35,6 +28,5 @@ if (isset($_POST['signup'])) {
         header("Location:../view/login_and_register.php");
         exit();
     }
-//}
 
 ?>
