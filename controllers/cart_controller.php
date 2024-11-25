@@ -2,51 +2,59 @@
 // Include the Cart class
 include("../classes/cart_class.php");
 
-function addToCartController($serviceID, $customerID, $quantity) {
+function addToCartController($userID, $productID, $quantity) {
     // Create an instance of the Cart class
     $newCartItem = new Cart();
 
     // Return the addCart method
-    return $newCartItem->addToCart($serviceID, $customerID, $quantity);
+    return $newCartItem->addToCart($userID, $productID, $quantity);
 }
 
-function deleteCartItemController($serviceID, $customerID) {
+function deleteCartItemController($productID, $userID) {
     // Create an instance of the Cart class
     $cart_item = new Cart();
 
     // Return the deleteCart method
-    return $cart_item->deleteCartItem($serviceID, $customerID);
+    return $cart_item->deleteCartItem($productID, $userID);
 }
 
-function getCartItemsController() {
+function getCartItemsController($userID) {
     // Create an instance of the Cart class
     $cart_items = new Cart();
 
     // Return the getCart method
-    return $cart_items->getCartItems();
+    return $cart_items->getCartItems($userID);
 }
 
-function getOneCartItemController($serviceID, $customerID) {
+function getOneCartItemController($productID, $userID) {
     // Create an instance of the Cart class
     $cart_item = new Cart();
 
     // Return the getOneCart method
-    return $cart_item->getOneCartItem($serviceID, $customerID);
+    return $cart_item->getOneCartItem($productID, $userID);
 }
 
-function increaseCartItemQtyController($serviceID, $customerID, $quantity) {
+function increaseCartItemQtyController($productID, $userID, $quantity) {
     // Create an instance of the Cart class
     $cart_item = new Cart();
 
     // Return the getOneCart method
-    return $cart_item->increaseCartItemQty($serviceID, $customerID, $quantity);
+    return $cart_item->increaseCartItemQty($productID, $userID, $quantity);
 }
 
-function decreaseCartItemQtyController($serviceID, $customerID, $quantity) {
+function decreaseCartItemQtyController($productID, $userID, $quantity) {
     // Create an instance of the Cart class
     $cart_item = new Cart();
 
     // Return the getOneCart method
-    return $cart_item->decreaseCartItemQty($serviceID, $customerID, $quantity);
+    return $cart_item->decreaseCartItemQty($productID, $userID, $quantity);
+}
+
+function getCartItemsCostController($userID) {
+    // Create an instance of the Cart class
+    $cart_items = new Cart();
+
+    // Return the getCart method
+    return $cart_items->getCartItemsCost($userID);
 }
 ?>

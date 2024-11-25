@@ -48,11 +48,12 @@ $products = getProductsController(); // Fetch all products
                     <h2 class="text-xl font-semibold">View Products</h2>
                     <div class="flex items-center">
                         <?php if (isset($_SESSION['user_name'])): ?>
-                            <span class="text-gray-300">Hello, <?php echo $_SESSION['user_name']; ?>!</span>
-                            <a href="../actions/logout_action.php" class="text-red-500 hover:text-red-700">
-                                <i class="fas fa-sign-out-alt"></i> Logout
+                            <span class="text-black-300">Hello, <?php echo $_SESSION['user_name']; ?>!</span>
+                            <a href="cart.php" class="text-blue-500 hover:text-blue-700">
+                                <i class="fas fa-shopping-cart"></i> View Cart
                             </a>
-                        <?php //else: ?>
+                            <?php //else: 
+                            ?>
                             <!-- <a href="login_and_register.php" class="text-black-300 hover:text-gray">Login/Register</a> -->
                         <?php endif; ?>
                     </div>
@@ -82,11 +83,11 @@ $products = getProductsController(); // Fetch all products
                                     <td class="p-3"><?php echo $product['product_id']; ?></td>
                                     <td class="p-3"><?php echo $product['pname']; ?></td>
                                     <td class="p-3"><?php echo $product['description']; ?></td>
-                                    <td class="p-3">$<?php echo $product['price']; ?></td>
+                                    <td class="p-3"><?php echo $product['price']; ?></td>
                                     <td class="p-3"><?php echo $product['stock_qty']; ?></td>
                                     <td class="p-3">
-                                        <form action="../actions/add_to_cart_action.php" method="GET">
-                                            <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
+                                        <form action="../actions/add_to_cart_action.php" method="POST">
+                                            <input type="hidden" name="product_id" id="product_id" value="<?php echo $product['product_id']; ?>">
                                             <button type="submit" class="text-green-500">Add to Cart</button>
                                         </form>
                                     </td>

@@ -53,6 +53,33 @@ class Orders extends db_connection
     }
 
 
+    public function getOrderDetailsByUser($userID) {
+        $ndb = new db_connection();
+        
+        // Sanitize the userID using mysqli_real_escape_string
+        $user_id = mysqli_real_escape_string($ndb->db_conn(), $userID);
+    
+        // SQL query to select order details along with product names for all orders by the user
+        $sql = "SELECT `orders`.`order_id`, `orders`.`date` AS order_date, `orders`.`total_amount`, `orders`.`status` AS order_status,
+                       `order_details`.`qty`, `order_details`.`price`, `products`.`pname`
+                FROM `order_details`
+                JOIN `products` ON `order_details`.`product_id` = `products`.`product_id`
+                JOIN `orders` ON `order_details`.`order_id` = `orders`.`order_id`
+                WHERE `orders`.`user_id` = '$user_id'
+                ORDER BY `orders`.`date` DESC";
+        
+        // Execute the query
+        if ($ndb->db_query($sql)) {
+            // Fetch all results as an associative array
+            $order_details = $ndb->db_fetch_all();
+            return $order_details ? $order_details : [];
+        } else {
+            error_log("Error retrieving order details: " . mysqli_error($ndb->db_conn()));
+            return [];
+        }
+    }
+    
+
     public function deleteOrder($orderID) {
         $ndb = new db_connection();
 
@@ -103,8 +130,6 @@ class Orders extends db_connection
         $result = $this->db_fetch_one($sql);
 
         return $result['total_orders'];
-    
-        
     }
 
     function getTotalOrderAmounts() {
@@ -116,8 +141,61 @@ class Orders extends db_connection
         $result = $this->db_fetch_one($sql);
 
         return $result['total_revenue'];
+    }
+
+    public function calculateTotalAmount($orderID) {
+        $ndb = new db_connection();
     
+        // Secure the orderID using mysqli_real_escape_string through db_conn
+        $order_id = mysqli_real_escape_string($ndb->db_conn(), $orderID);
+    
+        // Query to calculate the total amount for the specific order
+        $sql = "SELECT SUM(`price` * `qty`) AS total FROM `order_details` WHERE `order_id` = '$order_id'";
+    
+        // Execute the query and fetch the result
+        $result = $ndb->db_query($sql);
         
+        if ($result) {
+            $row = $ndb->db_fetch_one($sql);
+            if ($row && isset($row['total'])) {
+                return $row['total']; // Return the total amount
+            } else {
+                return 0; // Return 0 if no rows were found
+            }
+        } else {
+            error_log("Error calculating total amount: " . mysqli_error($ndb->db_conn()));
+            return 0; // Return 0 if there's an error
+        }
+    }
+    
+    
+    
+    public function updateTotalAmount($orderID) {
+        $ndb = new db_connection();
+    
+        // Calculate the total amount for the order
+        $totalAmount = $this->calculateTotalAmount($orderID);
+    
+        // Ensure we have a valid total amount before proceeding
+        if ($totalAmount !== false) {
+            // Secure the orderID and totalAmount
+            $order_id = mysqli_real_escape_string($ndb->db_conn(), $orderID);
+            $total_amount = mysqli_real_escape_string($ndb->db_conn(), $totalAmount);
+    
+            // Update the orders table with the calculated total amount
+            $sql = "UPDATE `orders` SET `total_amount` = '$total_amount' WHERE `order_id` = '$order_id'";
+    
+            // Execute the update query
+            if ($ndb->db_query($sql)) {
+                return true;
+            } else {
+                error_log("Error updating total amount: " . mysqli_error($ndb->db_conn()));
+                return false;
+            }
+        } else {
+            error_log("Failed to calculate total amount for order ID: $orderID");
+            return false;
+        }
     }
     
 }

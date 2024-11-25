@@ -41,6 +41,14 @@ function getOneOrderController($orderID) {
     return $order->getOneOrder($orderID);
 }
 
+function getOrderDetailsController($userID) {
+    // Create an instance of the Order class
+    $order = new Orders();
+
+    // Return the getOrderDetails method
+    return $order->getOrderDetailsByUser($userID);
+}
+
 function getTotalOrdersCount(){
     // Create an instance of the Order class
     $order = new Orders();
@@ -56,6 +64,26 @@ function getTotalOrderRevenueController(){
     // Return the getOneProduct method
     return $order->getTotalOrderAmounts();
     
-}   
+} 
+
+function calculateTotalAmountController($orderID) {
+    // Create an instance of the Order class
+    $order = new Orders();
+
+    // Calculate the total amount for the given order ID
+    $totalAmount = $order->calculateTotalAmount($orderID);
+
+    // Ensure it's a valid amount, otherwise return 0
+    return ($totalAmount !== false) ? $totalAmount : 0;
+}
+
+
+function updateTotalAmountController($orderID) {
+    // Create an instance of the Order class
+    $order = new Orders();
+
+    // Return the updateTotalAmount method
+    return $order->updateTotalAmount($orderID);
+}
 
 ?>

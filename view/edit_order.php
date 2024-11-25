@@ -62,42 +62,47 @@ $role = $_SESSION['user_role'];
 
         <!-- Main Content -->
         <div class="flex-1 p-6 overflow-y-auto">
-            <h2 class="text-2xl font-semibold mb-6">Edit Product</h2>
+            <h2 class="text-2xl font-semibold mb-6">Edit Order</h2>
 
-            <!-- Edit Stock Form -->
-            <form action="../actions/edit_product_action.php" method="POST" class="bg-white shadow-md rounded-lg p-8">
+            <!-- Edit Order Form -->
+            <form action="../actions/edit_order_action.php" method="POST" class="bg-white shadow-md rounded-lg p-8">
                 <!-- Hidden Field for Product ID -->
-                <input type="hidden" id="product_id" name="product_id" value="<?php echo htmlspecialchars($product_id); ?>">
+                <input type="hidden" id="order_id" name="order_id" value="<?php echo htmlspecialchars($order_id); ?>">
 
-                <!-- Product Name -->
+                <!-- Customer Name -->
                 <div class="mb-4">
-                    <label for="pname" class="block text-gray-700 font-semibold mb-2">Product Name:</label>
-                    <input type="text" id="pname" name="pname" value="<?php echo htmlspecialchars($product_name); ?>" class="form-control block w-full border border-gray-300 rounded-lg p-2 bg-gray-100">
+                    <label for="name" class="block text-gray-700 font-semibold mb-2">Customer Name:</label>
+                    <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($customer_name); ?>" class="form-control block w-full border border-gray-300 rounded-lg p-2 bg-gray-100">
                 </div>
 
-                <!-- Description Field -->
+                <!-- Date Ordered Field -->
                 <div class="mb-4">
-                    <label for="description" class="block text-gray-700 font-semibold mb-2">Description:</label>
-                    <input type="text" id="description" name="description" value="<?php echo htmlspecialchars($description); ?>" class="form-control block w-full border border-gray-300 rounded-lg p-2">
+                    <label for="order_date" class="block text-gray-700 font-semibold mb-2">Date Ordered:</label>
+                    <input type="text" id="order_date" name="order_date" value="<?php echo htmlspecialchars($order_date); ?>" class="form-control block w-full border border-gray-300 rounded-lg p-2">
                 </div>
 
-                <!-- Price Field -->
+                <!-- Total Amount Field -->
                 <div class="mb-4">
-                    <label for="price" class="block text-gray-700 font-semibold mb-2">Price:</label>
-                    <input type="number" id="price" name="price" value="<?php echo htmlspecialchars($price); ?>" class="form-control block w-full border border-gray-300 rounded-lg p-2">
+                    <label for="total_amt" class="block text-gray-700 font-semibold mb-2">Total Amount:</label>
+                    <input type="number" id="total_amt" name="total_amt" value="<?php echo htmlspecialchars($total_amt); ?>" class="form-control block w-full border border-gray-300 rounded-lg p-2">
                 </div>
 
-                <!-- Stock Field -->
+                <!-- Status Field -->
                 <div class="mb-4">
-                    <label for="stock" class="block text-gray-700 font-semibold mb-2">Quantity in Stock:</label>
-                    <input type="number" id="stock_qty" name="stock_qty" value="<?php echo htmlspecialchars($stock_qty); ?>" class="form-control block w-full border border-gray-300 rounded-lg p-2">
+                    <label for="status" class="block text-gray-700 font-semibold mb-2">Status:</label>
+                    <select class="" id="status" name="status">
+                        <option value="pending" <?php echo $status === 'pending' ?'selected' : '';?>>Pending</option>
+                        <option value="completed" <?php echo $status ==='completed' ?'selected' : '';?>>Completed</option>
+                        <option value="collected" <?php echo $status === 'collected' ?'selected' : '';?>>Collected</option>
+                        <option value="cancelled" <?php echo $status === 'cancelled' ?'selected' : '';?>>Cancelled</option>
+                    </select>
                 </div>
 
                 <!-- Buttons -->
                 <div class="flex justify-center gap-4 mt-6">
                     <!-- Update Button -->
-                    <button type="submit" onclick="return confirm('Are you sure you want to update the product?')" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200">
-                        Update Product
+                    <button type="submit" onclick="return confirm('Are you sure you want to update the order?')" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200">
+                        Update Order
                     </button>
                     <!-- Cancel Button -->
                     <button type="button" onclick="confirmCancel()" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200">

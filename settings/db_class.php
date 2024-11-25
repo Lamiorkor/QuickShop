@@ -111,7 +111,6 @@ if (!class_exists('db_connection')) {
 			return mysqli_fetch_assoc($this->results);
 		}
 
-		// Modify db_fetch_all in the db_class file
 		/**
 		 * Fetch all data from a query result
 		 * @param $result - MySQLi result object

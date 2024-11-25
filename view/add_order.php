@@ -73,8 +73,8 @@ $role = $_SESSION['user_role'];
                 
                 <!-- Customer Field -->
                 <div class="mb-4">
-                    <label for="customer" class="block text-gray-700 font-semibold mb-2">Customer:</label>
-                    <select name="customer" class="block text-gray-700 font-semibold mb-2">
+                    <label for="user_id" class="block text-gray-700 font-semibold mb-2">Customer:</label>
+                    <select name="user_id" class="block text-gray-700 font-semibold mb-2">
                         <?php foreach ($customers as $customer) { ?>
                             <option value="<?php echo $customer['user_id'];?>"><?php echo $customer['name'];?></option>
                         <?php } ?>
@@ -89,8 +89,8 @@ $role = $_SESSION['user_role'];
 
                 <!-- Total Amount Field -->
                 <div class="mb-4">
-                    <label for="amount" class="block text-gray-700 font-semibold mb-2">Total Amount:</label>
-                    <input type="number" id="amount" name="amount" step="0.01" class="form-control block w-full border border-gray-300 rounded-lg p-2 focus:border-blue-500 focus:ring-blue-500" required>
+                    <label for="total_amount" class="block text-gray-700 font-semibold mb-2">Total Amount:</label>
+                    <input type="number" id="total_amount" name="total_amount" step="0.01" class="form-control block w-full border border-gray-300 rounded-lg p-2 focus:border-blue-500 focus:ring-blue-500" required>
                 </div>
 
                 <!-- Submit Button -->
