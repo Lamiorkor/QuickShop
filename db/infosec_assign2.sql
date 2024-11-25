@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 25, 2024 at 06:56 PM
+-- Generation Time: Nov 25, 2024 at 09:12 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -41,7 +41,9 @@ CREATE TABLE `cart` (
 INSERT INTO `cart` (`cart_id`, `user_id`, `product_id`, `qty`) VALUES
 (2, 35, 3, 1),
 (3, 35, 4, 1),
-(4, 35, 1, 1);
+(4, 35, 1, 1),
+(5, 40, 3, 1),
+(6, 40, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -65,7 +67,8 @@ INSERT INTO `orders` (`order_id`, `user_id`, `date`, `total_amount`, `status`) V
 (2, 35, '2024-11-22 16:04:43', 55.30, 'pending'),
 (3, 30, '2024-11-25 01:06:40', 23.00, 'pending'),
 (4, 35, '2024-11-25 02:55:08', 68.40, 'pending'),
-(6, 35, '2024-11-25 03:21:07', 68.40, 'pending');
+(6, 35, '2024-11-25 03:21:07', 68.40, 'pending'),
+(7, 40, '2024-11-25 20:04:38', 45.00, 'pending');
 
 -- --------------------------------------------------------
 
@@ -91,7 +94,9 @@ INSERT INTO `order_details` (`order_detail_id`, `order_id`, `product_id`, `qty`,
 (3, 5, 1, 1, 25.00),
 (4, 6, 3, 1, 20.00),
 (5, 6, 4, 1, 23.40),
-(6, 6, 1, 1, 25.00);
+(6, 6, 1, 1, 25.00),
+(7, 7, 1, 1, 25.00),
+(8, 7, 3, 1, 20.00);
 
 -- --------------------------------------------------------
 
@@ -149,12 +154,11 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `role`) VALUES
 (1, 'Janet Boye', 'jboye@gmail.com', '$2y$10$xDOYgHyPe8OvRFFi7.abN.iDzHQ2PDSrGKzOVx.cGK.Aa09XvYL3u', 'administrator'),
 (2, 'Akos Asante', 'aasante@hotmail.com', '$2y$10$GN5SFNPPVPKaCVJ1em9s4uithyE8Z1vaiILthATvgaFYGGt9xnXKq', 'inventory manager'),
-(30, 'Akos Asante', 'aaasante@hotmail.com', '$2y$10$uHrTuNEKIS/4duqbVFZGHeI59EX33dK/REYn2GG/DYYvgEEoXNS8y', 'customer'),
-(33, 'Henry Hart', 'hartinator@gmail.com', '$2y$10$g5iJ.2H29HaVSp6CMIDiQelN1mSZ0cz.kQSqoNvoV/dhDfUu5lb9K', 'sales personnel'),
+(30, 'Akos Asante', 'aaasante@hotmail.com', '$2y$10$uHrTuNEKIS/4duqbVFZGHeI59EX33dK/REYn2GG/DYYvgEEoXNS8y', 'sales personnel'),
 (34, 'Jim Jazzie', 'jjce@jimmy-jazz.com', '$2y$10$hre8JGjGFWj2pbkk9NKKAeU/Ok0YHtz/AVY.1Mka7dam/gOWk3QXW', 'administrator'),
 (35, 'Prof J', 'jisthebest@gmail.com', '$2y$10$JAkZxlufUxLtKVGyDhHk/.B2soaIh0DJAWqCTr9MtjQc/aUloUvHy', 'customer'),
 (36, 'Favour', 'favoured@gmail.com', '$2y$10$zoxF4UejSVKZh3/6WB5Z3OEaJWJJoS7d5Z.xhu8KSD3H3u91THkpW', 'customer'),
-(40, 'Jimmy', 'jim.edward@ashesi.edu.gh', '$2y$10$sUbsodz648DjX3t2xBLa6uPbHa7CYndxfGAibutQL0.mAJpEZeNGS', 'customer');
+(40, 'Jimmy', 'jim.edward@ashesi.edu.gh', '$2y$10$sUbsodz648DjX3t2xBLa6uPbHa7CYndxfGAibutQL0.mAJpEZeNGS', 'administrator');
 
 --
 -- Indexes for dumped tables
@@ -166,7 +170,7 @@ INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `role`) VALUES
 ALTER TABLE `cart`
   ADD PRIMARY KEY (`cart_id`),
   ADD KEY `product_id` (`product_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `cart_ibfk_2` (`user_id`);
 
 --
 -- Indexes for table `orders`
@@ -179,7 +183,8 @@ ALTER TABLE `orders`
 -- Indexes for table `order_details`
 --
 ALTER TABLE `order_details`
-  ADD PRIMARY KEY (`order_detail_id`);
+  ADD PRIMARY KEY (`order_detail_id`),
+  ADD KEY `product_id` (`product_id`);
 
 --
 -- Indexes for table `products`
@@ -209,19 +214,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `order_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `order_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -233,7 +238,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `requests`
 --
 ALTER TABLE `requests`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -250,13 +255,19 @@ ALTER TABLE `users`
 --
 ALTER TABLE `cart`
   ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`),
-  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+
+--
+-- Constraints for table `order_details`
+--
+ALTER TABLE `order_details`
+  ADD CONSTRAINT `order_details_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
 
 --
 -- Constraints for table `requests`

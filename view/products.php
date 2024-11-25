@@ -29,6 +29,9 @@ $products = getProductsController(); // Fetch all products
                 <a href="view_orders.php" class="text-gray-300 hover:text-white">Orders</a>
                 <?php if (isset($_SESSION['user_name'])): ?>
                     <span class="text-gray-300">Hello, <?php echo $_SESSION['user_name']; ?>!</span>
+                    <a href="edit_customer.php" class="text-gray-300 hover:text-white">
+                        <i class="fas fa-user-edit"></i> Update Your Account
+                    </a>
                     <a href="../actions/logout_action.php" class="text-red-500 hover:text-red-700">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </a>

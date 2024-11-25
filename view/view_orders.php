@@ -4,7 +4,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 session_start();
-require_once('../controllers/order_controller.php'); 
+require_once('../controllers/order_controller.php');
 
 $user_id = $_SESSION['user_id'];
 $order_details = getOrderDetailsController($user_id);
@@ -21,6 +21,7 @@ foreach ($order_details as $detail) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,6 +29,7 @@ foreach ($order_details as $detail) {
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
+
 <body class="bg-gray-100">
 
     <!-- Navbar -->
@@ -41,6 +43,9 @@ foreach ($order_details as $detail) {
                 <?php if (isset($_SESSION['user_name'])): ?>
                     <span class="text-gray-300">Hello, <?php echo $_SESSION['user_name']; ?>!</span>
                     <a href="../actions/logout_action.php" class="text-red-500 hover:text-red-700">
+                        <a href="edit_customer.php" class="text-gray-300 hover:text-white">
+                            <i class="fas fa-user-edit"></i> Update Your Account
+                        </a>
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </a>
                 <?php else: ?>
@@ -121,4 +126,5 @@ foreach ($order_details as $detail) {
         </div>
     </div>
 </body>
+
 </html>

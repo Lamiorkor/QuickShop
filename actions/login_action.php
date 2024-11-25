@@ -23,7 +23,7 @@ if (isset($_POST['login'])) {
             $_SESSION['user_name'] = $user['name'];
             $_SESSION['user_role'] = $user['role'];
                 header("Location: ../view/otp.php");
-                exit();  // Always exit after header redirects
+                exit();  
             } else {
                 // OTP generation failed
                 $error = "There was an issue. Please try again.";

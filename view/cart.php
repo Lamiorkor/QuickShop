@@ -1,14 +1,15 @@
 <?php
 session_start();
-require_once('../controllers/cart_controller.php'); 
+require_once('../controllers/cart_controller.php');
 
 $user_id = $_SESSION['user_id'];
-$cart_items = getCartItemsController($user_id); 
+$cart_items = getCartItemsController($user_id);
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,6 +30,9 @@ $cart_items = getCartItemsController($user_id);
                 <a href="view_orders.php" class="text-gray-300 hover:text-white">Orders</a>
                 <?php if (isset($_SESSION['user_name'])): ?>
                     <span class="text-gray-300">Hello, <?php echo $_SESSION['user_name']; ?>!</span>
+                    <a href="edit_customer.php" class="text-gray-300 hover:text-white">
+                        <i class="fas fa-user-edit"></i> Update Your Account
+                    </a>
                     <a href="../actions/logout_action.php" class="text-red-500 hover:text-red-700">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </a>
@@ -103,8 +107,8 @@ $cart_items = getCartItemsController($user_id);
                     <!-- Proceed to Checkout Button -->
                     <div class="mt-6 text-right">
                         <form action="../actions/add_order_action.php" method="POST">
-                            <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id'];?>">
-                            <input type="hidden" name="total_amount" value="<?php echo getCartItemsCostController($user_id);?>">
+                            <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
+                            <input type="hidden" name="total_amount" value="<?php echo getCartItemsCostController($user_id); ?>">
                             <button type="submit" name="submit" class="px-6 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700">
                                 Proceed to Checkout
                             </button>
@@ -115,4 +119,5 @@ $cart_items = getCartItemsController($user_id);
         </div>
     </div>
 </body>
+
 </html>
