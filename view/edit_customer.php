@@ -64,7 +64,7 @@ if (!$user) {
 
             <!-- Phone Number -->
             <div class="mb-4">
-                <label for="password" class="block text-gray-700 font-semibold mb-2">   Password:</label>
+                <label for="password" class="block text-gray-700 font-semibold mb-2">Password:</label>
                 <input type="text" id="password" name="password" value="<?php echo 'Type a New Password Here, Make sure you  remember!!'; ?>" 
                        class="form-control block w-full border border-gray-300 rounded-lg p-2">
             </div>

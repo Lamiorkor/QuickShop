@@ -2,10 +2,6 @@
 session_start();
 require_once('../controllers/product_controller.php');
 $products = getProductsController(); // Fetch all products
-$_SESSION['user_name'] = "Jimmy";
-$_SESSION['user_id'] = 40; 
-$_SESSION['user_role'] = 'customer';
-$_SESSION['user_email'] = "jim.edward@ashesi.edu.gh";
 $user_name = isset($_SESSION['user_name']) ? $_SESSION['user_name'] : null;
 $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 ?>

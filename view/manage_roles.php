@@ -1,14 +1,11 @@
 <?php
 session_start();
-$role = 'administrator';
-$_SESSION['user_name'] = "Janet";
-$_SESSION['user_email'] = "jboye@gmail.com";
-$_SESSION['user_id'] = 1;
-//$role = $_SESSION['user_role']; // Example role, modify based on session value
+$role = $_SESSION['user_role']; 
 require_once('../controllers/user_controller.php');
 require_once('../controllers/product_controller.php'); // Include the product controller
 $users = getAllUsersController(); // Fetch all users for role management
 $roleRequests = getAllRoleRequestsController(); // Fetch all role change requests
+
 ?>
 
 <!DOCTYPE html>

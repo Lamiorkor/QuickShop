@@ -1,9 +1,6 @@
 <?php
 session_start();
-$role = 'inventory manager';
-$_SESSION['user_name'] = "Akos Asante";
-$_SESSION['user_email'] = "aasante@hotmail.com";
-$_SESSION['user_id'] = 2;
+$role = $_SESSION['user_role'];
 require_once('../controllers/order_controller.php');
 $orders = getOrdersController(); // Fetch all orders
 $order_details = getAllOrderDetailsController(); // Fetch all order details
@@ -68,9 +65,6 @@ $order_details = getAllOrderDetailsController(); // Fetch all order details
             <main class="p-6">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-semibold">All Orders</h3>
-                    <a href="add_order.php" class="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded shadow">
-                        <i class="fas fa-plus mr-2"></i> Add Order
-                    </a>
                 </div>
                 <div class="bg-white p-6 rounded-lg shadow-sm">
                     <table class="w-full">
