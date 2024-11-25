@@ -105,8 +105,22 @@ class Orders extends db_connection
     public function deleteOrder($orderID) {
         $ndb = new db_connection();
 
+        $order_id = mysqli_real_escape_string($ndb->db_conn(), $orderID);
+
         // Prepare SQL statement
-        $sql = "DELETE FROM `orders` WHERE `order_id` = '$orderID'";
+        $sql = "DELETE FROM `orders` WHERE `order_id` = '$order_id'";
+
+        // Execute query and return result
+        return $this->db_query($sql);
+    }
+
+    public function deleteOrderDetail($orderDetailID) {
+        $ndb = new db_connection();
+
+        $order_detail_id = mysqli_real_escape_string($ndb->db_conn(), $orderDetailID);
+
+        // Prepare SQL statement
+        $sql = "DELETE FROM `order_details` WHERE `order_detail_id` = '$order_detail_id'";
 
         // Execute query and return result
         return $this->db_query($sql);
@@ -134,13 +148,53 @@ class Orders extends db_connection
     }
 
     function getOneOrder($order_id) {
+        // Create a new db_connection instance
+        $ndb = new db_connection();
+    
+        // Sanitize the order_id to prevent SQL injection
+        $order_id = mysqli_real_escape_string($ndb->db_conn(), $order_id);
+    
+        // SQL query to fetch order details along with the user's name
+        $sql = "SELECT `orders`.*, `users`.`name` 
+                FROM `orders` 
+                JOIN `users` ON `orders`.`user_id` = `users`.`user_id`
+                WHERE `orders`.`order_id` = '$order_id'";
+    
+        // Use the db_fetch_one method to execute and fetch the result
+        $result = $ndb->db_fetch_one($sql);
+    
+        // Return the fetched result
+        return $result;
+    }
+
+    function editOrder($orderID, $totalAmount, $status) {
         $ndb = new db_connection();
 
-        // Query to fetch categories
-        $sql = "SELECT `orders`.*, `users`.`name` FROM `orders` 
-                JOIN `users` ON `orders`.`user_id` = `users`.`user_id`
+        $order_id = mysqli_real_escape_string($ndb->db_conn(), $orderID);
+        $total_amt = mysqli_real_escape_string($ndb->db_conn(), $totalAmount);
+        $order_status = mysqli_real_escape_string($ndb->db_conn(), $status);
+
+        // Prepare SQL query
+        $sql = "UPDATE `orders` SET `total_amount` = '$total_amt', `status` = '$order_status'
                 WHERE `order_id` = '$order_id'";
-        $result = mysqli_query($ndb->db_conn(), $sql);
+
+        // Execute the query
+        return $this->db_query($sql);
+    }
+    
+    function editOrderDetail($orderID, $productID, $qty) {
+        $ndb = new db_connection();
+
+        $order_id = mysqli_real_escape_string($ndb->db_conn(), $orderID);
+        $product_id = mysqli_real_escape_string($ndb->db_conn(), $productID);
+        $quantity = mysqli_real_escape_string($ndb->db_conn(), $qty);
+
+        // Prepare SQL query
+        $sql = "UPDATE `order_details` SET `qty` = '$quantity'
+                WHERE `order_id` = '$order_id' AND `product_id` = '$product_id'";
+
+        // Execute the query
+        return $this->db_query($sql);
     }
 
     function getTotalOrders() {
@@ -219,6 +273,51 @@ class Orders extends db_connection
             return false;
         }
     }
+
+    public function increaseQty($detailID, $quantity) {
+        $ndb = new db_connection();
+
+        $order_detail_id = mysqli_real_escape_string($ndb->db_conn(), $detailID);
+        $qty = mysqli_real_escape_string($ndb->db_conn(), $quantity);
+
+        $check = "SELECT * FROM `order_details` WHERE `order_detail_id` = '$order_detail_id'";
+        $result = $this->db_fetch_one($check);
+
+        if($result) {
+            $newQty = $result['qty'] + $qty;
+            // Prepare SQL query
+            $update = "UPDATE `order_details` SET `qty` = '$newQty' WHERE `order_detail_id` = '$order_detail_id'";
+            // Execute the query
+            return $this->db_query($update);
+        } else {
+            // If cart item doesn't already exist, return false
+            return false;
+        }
+    }
+
+    public function decreaseQty($detailID, $quantity) {
+        $ndb = new db_connection();
+    
+        $order_detail_id = mysqli_real_escape_string($ndb->db_conn(), $detailID);
+        $qty = mysqli_real_escape_string($ndb->db_conn(), $quantity);
+    
+        $check = "SELECT * FROM `order_details` WHERE `order_detail_id` = '$order_detail_id'";
+        $result = $ndb->db_fetch_one($check);
+    
+        if ($result) {
+            if ($result['qty'] > 0) {
+                $newQty = max($result['qty'] - $qty, 0); // Prevent going below zero
+                $update = "UPDATE `order_details` SET `qty` = '$newQty' WHERE `order_detail_id` = '$order_detail_id'";
+                return $ndb->db_query($update); // Execute the update
+            } else {
+                // Quantity is already zero
+                return false;
+            }
+        }
+        // Item not found
+        return false;
+    }
+    
     
 }
 ?>

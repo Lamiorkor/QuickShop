@@ -1,18 +1,25 @@
 <?php
-session_start();
-require_once ('../controllers/order_controller.php');
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
+session_start();
+require_once('../controllers/order_controller.php');
+
+// Retrieve the order ID from the GET request
 $order_id = $_GET['order_id'];
 
-$order = getOneOrderController($order_id); 
+// Fetch the order details using the controller
+$order = getOneOrderController($order_id);
 
+// Extract order details
 $customer_name = $order['name'];
-$order_date = $order['order_date'];
+$order_date = $order['date'];
 $total_amt = $order['total_amount'];
-$status = $product['status'];
+$status = $order['status']; 
 
-$role = $_SESSION['user_role'];
-
+// Get user role from the session
+$role = "administrator";
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +27,7 @@ $role = $_SESSION['user_role'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Product</title>
+    <title>Edit Order</title>
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
     <!-- FontAwesome for icons -->
@@ -28,7 +35,6 @@ $role = $_SESSION['user_role'];
 </head>
 <body>
     <div class="flex h-screen bg-gray-100">
-
         <!-- Sidebar -->
         <div class="w-64 bg-gray-800">
             <div class="p-6">
@@ -56,45 +62,35 @@ $role = $_SESSION['user_role'];
             </nav>
         </div>
 
-        <div>
-            <h2>Scroll down to edit product</h2>
-        </div>
-
         <!-- Main Content -->
         <div class="flex-1 p-6 overflow-y-auto">
             <h2 class="text-2xl font-semibold mb-6">Edit Order</h2>
 
             <!-- Edit Order Form -->
             <form action="../actions/edit_order_action.php" method="POST" class="bg-white shadow-md rounded-lg p-8">
-                <!-- Hidden Field for Product ID -->
+                <!-- Hidden Field for Order ID -->
                 <input type="hidden" id="order_id" name="order_id" value="<?php echo htmlspecialchars($order_id); ?>">
 
                 <!-- Customer Name -->
                 <div class="mb-4">
-                    <label for="name" class="block text-gray-700 font-semibold mb-2">Customer Name:</label>
-                    <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($customer_name); ?>" class="form-control block w-full border border-gray-300 rounded-lg p-2 bg-gray-100">
+                    <label for="name" class="block text-gray-700 font-semibold mb-2">Customer Name (Read Only):</label>
+                    <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($customer_name); ?>" class="form-control block w-full border border-gray-300 rounded-lg p-2 bg-gray-100" readonly>
                 </div>
 
-                <!-- Date Ordered Field -->
-                <div class="mb-4">
-                    <label for="order_date" class="block text-gray-700 font-semibold mb-2">Date Ordered:</label>
-                    <input type="text" id="order_date" name="order_date" value="<?php echo htmlspecialchars($order_date); ?>" class="form-control block w-full border border-gray-300 rounded-lg p-2">
-                </div>
-
-                <!-- Total Amount Field -->
+                <!-- Total Amount -->
                 <div class="mb-4">
                     <label for="total_amt" class="block text-gray-700 font-semibold mb-2">Total Amount:</label>
                     <input type="number" id="total_amt" name="total_amt" value="<?php echo htmlspecialchars($total_amt); ?>" class="form-control block w-full border border-gray-300 rounded-lg p-2">
                 </div>
 
-                <!-- Status Field -->
+                <!-- Status -->
                 <div class="mb-4">
                     <label for="status" class="block text-gray-700 font-semibold mb-2">Status:</label>
-                    <select class="" id="status" name="status">
-                        <option value="pending" <?php echo $status === 'pending' ?'selected' : '';?>>Pending</option>
-                        <option value="completed" <?php echo $status ==='completed' ?'selected' : '';?>>Completed</option>
-                        <option value="collected" <?php echo $status === 'collected' ?'selected' : '';?>>Collected</option>
-                        <option value="cancelled" <?php echo $status === 'cancelled' ?'selected' : '';?>>Cancelled</option>
+                    <select id="status" name="status" class="block w-full border border-gray-300 rounded-lg p-2">
+                        <option value="pending" <?php echo $status === 'pending' ? 'selected' : ''; ?>>Pending</option>
+                        <option value="completed" <?php echo $status === 'completed' ? 'selected' : ''; ?>>Completed</option>
+                        <option value="collected" <?php echo $status === 'collected' ? 'selected' : ''; ?>>Collected</option>
+                        <option value="cancelled" <?php echo $status === 'cancelled' ? 'selected' : ''; ?>>Cancelled</option>
                     </select>
                 </div>
 
@@ -113,21 +109,13 @@ $role = $_SESSION['user_role'];
         </div>
     </div>
 
-    <!-- JavaScript -->
-    <!-- <script>
-        // Redirect to product listing after successful update
-        <?php //if (isset($_GET['success']) && $_GET['success'] == 'true'): ?>
-        
-        window.location.href = '../view/view_product.php';
-        alert('Stock successfully updated! Redirecting to product list.');
-        <?php //endif; ?>
-
+    <script>
         // Cancel action confirmation
         function confirmCancel() {
             if (confirm('Are you sure you want to cancel?')) {
-                window.location.href = '../view/view_product.php';
+                window.location.href = 'manage_orders.php';
             }
         }
-    </script> -->
+    </script>
 </body>
 </html>

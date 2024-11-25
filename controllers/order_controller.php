@@ -41,12 +41,35 @@ function getOneOrderController($orderID) {
     return $order->getOneOrder($orderID);
 }
 
+function updateOrderController($orderID, $totalAmount, $status) {
+    // Create an instance of the Order class
+    $order = new Orders();
+
+    // Return the getOneProduct method
+    return $order->editOrder($orderID, $totalAmount, $status);
+}
+
+function updateOrderDetailController($orderID, $productID, $qty) {
+    // Create an instance of the Order class
+    $order = new Orders();
+
+    // Return the getOneProduct method
+    return $order->editOrderDetail($orderID, $productID, $qty);
+}
+
 function getOrderDetailsController($userID) {
     // Create an instance of the Order class
     $order = new Orders();
 
     // Return the getOrderDetails method
     return $order->getOrderDetailsByUser($userID);
+}
+
+function deleteOrderDetailController($orderDetailID) {
+    $order = new Orders();
+
+    // Return the deleteOrder method
+    return $order->deleteOrderDetail($orderDetailID);
 }
 
 function getAllOrderDetailsController() {
@@ -92,6 +115,22 @@ function updateTotalAmountController($orderID) {
 
     // Return the updateTotalAmount method
     return $order->updateTotalAmount($orderID);
+}
+
+function increaseQtyController($detailID, $quantity) {
+    // Create an instance of the Order class
+    $order = new Orders();
+
+    // Return the increaseQty method
+    return $order->increaseQty($detailID, $quantity);
+}
+
+function decreaseQtyController($detailID, $quantity) {
+    // Create an instance of the Order class
+    $order = new Orders();
+
+    // Return the decreaseQty method
+    return $order->decreaseQty($detailID, $quantity);
 }
 
 ?>

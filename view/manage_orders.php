@@ -1,6 +1,6 @@
 <?php
 session_start();
-$role = $_SESSION['user_role'];
+$role = "administrator";
 require_once('../controllers/order_controller.php');
 $orders = getOrdersController(); // Fetch all orders
 $order_details = getAllOrderDetailsController(); // Fetch all order details
@@ -88,18 +88,18 @@ $order_details = getAllOrderDetailsController(); // Fetch all order details
                                     <td class="p-3"><?php echo $order['date']; ?></td>
                                     <td class="p-3">$<?php echo $order['total_amount']; ?></td>
                                     <td class="p-3"><?php echo $order['status']; ?></td>
-                                    <?php if ($role === 'administrator' || $role === 'sales personnel') { ?>
-                                        <td class="p-3">
-                                            <form action="edit_order.php" method="POST">
+                                    <td class="p-3">
+                                        <?php if ($role === 'administrator' || $role === 'sales personnel') { ?>
+                                            <form action="edit_order.php" method="GET" class="inline-block">
                                                 <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
-                                                <button class="text-blue-500">Edit</button>
+                                                <button type="submit" class="text-blue-500 hover:text-blue-700">Edit</button>
                                             </form>
-                                            <form action="../actions/delete_order_action.php" method="POST">
+                                            <form action="../actions/delete_order_action.php" method="POST" class="inline-block">
                                                 <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
-                                                <button class="text-red-500">Delete</button>
+                                                <button type="submit" onclick="return confirm('Are you sure you want to delete this order?')" class="text-red-500 hover:text-red-700">Delete</button>
                                             </form>
-                                        </td>
-                                    <?php } ?>
+                                        <?php } ?>
+                                    </td>
                                 </tr>
                             <?php } ?>
                         </tbody>
@@ -130,21 +130,33 @@ $order_details = getAllOrderDetailsController(); // Fetch all order details
                                         <td class="p-3"><?php echo $detail['order_detail_id']; ?></td>
                                         <td class="p-3"><?php echo $detail['order_id']; ?></td>
                                         <td class="p-3"><?php echo $detail['pname']; ?></td>
-                                        <td class="p-3"><?php echo $detail['qty']; ?></td>
-                                        <td class="p-3">$<?php echo $detail['price']; ?></td>
+                                        <td class="p-3">
+                                            <div class="flex items-center space-x-2">
+                                                <form action="../actions/update_qty_action.php" method="POST" class="inline">
+                                                    <input type="hidden" name="order_detail_id" value="<?php echo $detail['order_detail_id']; ?>">
+                                                    <button type="submit" name="action" value="increase" class="text-green-500 hover:text-green-700">
+                                                        <i class="fas fa-plus-circle"></i>
+                                                    </button>
+                                                </form>
+                                                <?php echo $detail['qty']; ?>
+                                                <form action="../actions/update_qty_action.php" method="POST" class="inline">
+                                                    <input type="hidden" name="order_detail_id" value="<?php echo $detail['order_detail_id']; ?>">
+                                                    <button type="submit" name="action" value="decrease" class="text-red-500 hover:text-red-700">
+                                                        <i class="fas fa-minus-circle"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                        <td class="p-3"><?php echo $detail['price']; ?></td>
                                         <td class="p-3"><?php echo $detail['order_status']; ?></td>
-                                        <?php if ($role === 'administrator' || $role === 'sales personnel') { ?>
-                                            <td class="p-3 flex space-x-2">
-                                                <form action="edit_order_detail.php" method="POST">
+                                        <td class="p-3 flex space-x-2">
+                                            <?php if ($role === 'administrator' || $role === 'sales personnel') { ?>
+                                                <form action="../actions/delete_order_detail_action.php" method="POST" class="inline-block">
                                                     <input type="hidden" name="order_detail_id" value="<?php echo $detail['order_detail_id']; ?>">
-                                                    <button class="text-blue-500">Edit</button>
+                                                    <button type="submit" onclick="return confirm('Are you sure you want to delete this order detail?')" class="text-red-500 hover:text-red-700">Delete</button>
                                                 </form>
-                                                <form action="../actions/delete_order_detail_action.php" method="POST">
-                                                    <input type="hidden" name="order_detail_id" value="<?php echo $detail['order_detail_id']; ?>">
-                                                    <button class="text-red-500">Delete</button>
-                                                </form>
-                                            </td>
-                                        <?php } ?>
+                                            <?php } ?>
+                                        </td>
                                     </tr>
                                 <?php } ?>
                             </tbody>

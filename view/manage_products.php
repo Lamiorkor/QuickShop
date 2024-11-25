@@ -1,6 +1,6 @@
 <?php
 session_start();
-$role = $_SESSION['user_role'];
+$role = "administrator";
 require_once('../controllers/product_controller.php');
 $products = getProductsController(); // Fetch all products
 
@@ -25,9 +25,12 @@ $products = getProductsController(); // Fetch all products
                 <h1 class="text-2xl font-bold text-white">Admin Panel</h1>
             </div>
             <nav class="mt-6">
-                <a href="admin.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
-                    <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
-                </a>
+                <?php if ($role === 'administrator') { ?>
+                    <a href="admin.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
+                        <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
+                    </a>
+                <?php } ?>
+
                 <?php if ($role === 'administrator' || $role === 'sales personnel' || $role === 'inventory manager') { ?>
                     <a href="manage_orders.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
                         <i class="fas fa-shopping-cart mr-3"></i> Orders
