@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 25, 2024 at 09:12 PM
+-- Generation Time: Nov 25, 2024 at 09:59 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -144,21 +144,24 @@ CREATE TABLE `users` (
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role` enum('administrator','inventory manager','sales personnel','customer') NOT NULL
+  `role` enum('administrator','inventory manager','sales personnel','customer') NOT NULL,
+  `auth_pin` int(11) DEFAULT NULL,
+  `last_update` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  `otp_expiry` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `role`) VALUES
-(1, 'Janet Boye', 'jboye@gmail.com', '$2y$10$xDOYgHyPe8OvRFFi7.abN.iDzHQ2PDSrGKzOVx.cGK.Aa09XvYL3u', 'administrator'),
-(2, 'Akos Asante', 'aasante@hotmail.com', '$2y$10$GN5SFNPPVPKaCVJ1em9s4uithyE8Z1vaiILthATvgaFYGGt9xnXKq', 'inventory manager'),
-(30, 'Akos Asante', 'aaasante@hotmail.com', '$2y$10$uHrTuNEKIS/4duqbVFZGHeI59EX33dK/REYn2GG/DYYvgEEoXNS8y', 'sales personnel'),
-(34, 'Jim Jazzie', 'jjce@jimmy-jazz.com', '$2y$10$hre8JGjGFWj2pbkk9NKKAeU/Ok0YHtz/AVY.1Mka7dam/gOWk3QXW', 'administrator'),
-(35, 'Prof J', 'jisthebest@gmail.com', '$2y$10$JAkZxlufUxLtKVGyDhHk/.B2soaIh0DJAWqCTr9MtjQc/aUloUvHy', 'customer'),
-(36, 'Favour', 'favoured@gmail.com', '$2y$10$zoxF4UejSVKZh3/6WB5Z3OEaJWJJoS7d5Z.xhu8KSD3H3u91THkpW', 'customer'),
-(40, 'Jimmy', 'jim.edward@ashesi.edu.gh', '$2y$10$sUbsodz648DjX3t2xBLa6uPbHa7CYndxfGAibutQL0.mAJpEZeNGS', 'administrator');
+INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `role`, `auth_pin`, `last_update`, `otp_expiry`) VALUES
+(1, 'Janet Boye', 'jboye@gmail.com', '$2y$10$xDOYgHyPe8OvRFFi7.abN.iDzHQ2PDSrGKzOVx.cGK.Aa09XvYL3u', 'administrator', 0, '2024-11-25 20:58:23', '0000-00-00 00:00:00'),
+(2, 'Akos Asante', 'aasante@hotmail.com', '$2y$10$GN5SFNPPVPKaCVJ1em9s4uithyE8Z1vaiILthATvgaFYGGt9xnXKq', 'inventory manager', 0, '2024-11-25 20:58:23', '0000-00-00 00:00:00'),
+(30, 'Akos Asante', 'aaasante@hotmail.com', '$2y$10$uHrTuNEKIS/4duqbVFZGHeI59EX33dK/REYn2GG/DYYvgEEoXNS8y', 'sales personnel', 0, '2024-11-25 20:58:23', '0000-00-00 00:00:00'),
+(34, 'Jim Jazzie', 'jjce@jimmy-jazz.com', '$2y$10$hre8JGjGFWj2pbkk9NKKAeU/Ok0YHtz/AVY.1Mka7dam/gOWk3QXW', 'administrator', 0, '2024-11-25 20:58:23', '0000-00-00 00:00:00'),
+(35, 'Prof J', 'jisthebest@gmail.com', '$2y$10$JAkZxlufUxLtKVGyDhHk/.B2soaIh0DJAWqCTr9MtjQc/aUloUvHy', 'customer', 0, '2024-11-25 20:58:23', '0000-00-00 00:00:00'),
+(36, 'Favour', 'favoured@gmail.com', '$2y$10$zoxF4UejSVKZh3/6WB5Z3OEaJWJJoS7d5Z.xhu8KSD3H3u91THkpW', 'customer', 0, '2024-11-25 20:58:23', '0000-00-00 00:00:00'),
+(40, 'Jimmy', 'jim.edward@ashesi.edu.gh', '$2y$10$sUbsodz648DjX3t2xBLa6uPbHa7CYndxfGAibutQL0.mAJpEZeNGS', 'administrator', 0, '2024-11-25 20:58:23', '0000-00-00 00:00:00');
 
 --
 -- Indexes for dumped tables
@@ -177,7 +180,7 @@ ALTER TABLE `cart`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`order_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `orders_ibfk_1` (`user_id`);
 
 --
 -- Indexes for table `order_details`
@@ -197,7 +200,7 @@ ALTER TABLE `products`
 --
 ALTER TABLE `requests`
   ADD PRIMARY KEY (`request_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `requests_ibfk_1` (`user_id`);
 
 --
 -- Indexes for table `users`
@@ -261,7 +264,7 @@ ALTER TABLE `cart`
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `order_details`
@@ -273,7 +276,7 @@ ALTER TABLE `order_details`
 -- Constraints for table `requests`
 --
 ALTER TABLE `requests`
-  ADD CONSTRAINT `requests_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+  ADD CONSTRAINT `requests_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
