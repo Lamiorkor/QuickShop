@@ -8,10 +8,9 @@ if (isset($_POST['signup'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Call registerController
     $registerUser = registerController($name, $email, $password);
 
-    // Check if registration was successful
+    
     if ($registerUser !== false) {
         // Redirect to login page with success message
         header("Location:../view/login_and_register.php");

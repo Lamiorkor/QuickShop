@@ -1,48 +1,32 @@
 <?php
 
 include "../controllers/user_controller.php";
-
+require_once('../controllers/otp_controller.php');
 // Check if form is submitted
 if (isset($_POST['login'])) {
     // Check if email and password are set and not empty
     if (isset($_POST['email']) && isset($_POST['password']) && !empty($_POST['email']) && !empty($_POST['password'])) {
         $email = $_POST['email'];
         $password = $_POST['password'];
-
+        
         // Login user
         $user = loginController($email, $password);
-
+        
         // Check if login was successful
-        if ($user !== false) {
+        if ($user) {
             // Start session
             session_start();
-
-            // Store user data in session
-            $_SESSION['user_id'] = $user['user_id'];
-            $_SESSION['user_email'] = $user['email'];
-            $_SESSION['user_name'] = $user['name'];
-            $_SESSION['user_role'] = $user['role'];
-
-            if ($_SESSION['user_role'] === 'administrator') {
-                header("Location: ../view/admin.php");
-                exit();
+            if (sendOTPController($email)) {
+                // OTP was successfully generated and sent
+                header("Location: ../view/otp.php");
+                exit();  // Always exit after header redirects
+            } else {
+                // OTP generation failed
+                $error = "There was an issue. Please try again.";
+            header("Location: ../view/login.php?error=" . urlencode($error));
+            exit();
+               
             }
-
-            elseif ($_SESSION['user_role'] === 'inventory manager') {
-                header("Location: ../view/manage_products.php");
-                exit();
-            }
-
-            elseif ($_SESSION['user_role'] === 'sales personnel') {
-                header("Location: ../view/manage_orders.php");
-                exit();
-            }
-
-            else {
-                header("Location: ../view/home.php");
-                exit();
-            }
-
 
         } else {
             // Redirect back to login page with error message

@@ -47,7 +47,7 @@ class User extends db_connection
         $email = mysqli_real_escape_string($ndb->db_conn(), $email);
         
         // Prepare SQL statement
-        $sql = "SELECT * FROM `users` WHERE `email` = '$email'";
+        $sql = "SELECT * FROM users WHERE email = '$email'";
         $result = $ndb->db_query($sql);
         
         if ($result) {
@@ -94,7 +94,34 @@ class User extends db_connection
         // Fetch all customers
         return $ndb->db_fetch_all();
     }
+    public function validateUser($email, $password) {
+        $ndb = new db_connection();
+        // Sanitize the input values to prevent SQL injection
+        $email = mysqli_real_escape_string($ndb->db_conn(), $email);
+        
+        // SQL query to fetch user details based on the provided username
+        $sql = "SELECT * FROM users WHERE email = '$email'";
+        
+        // Fetch the user record from the database
+        $user = $ndb->db_fetch_one($sql);
+    
+        // Check if user exists
+        if ($user) {
+            // Verify the entered password against the hashed password in the database
+            if (password_verify($password, $user['password'])) {
+                // If password is valid, return user data
+                return $user;
+            } else {
+                // If password does not match, return false
+                return false;
+            }
+        } else {
+            // If no user is found, return false
+            return false;
+        }
+    }
 
+    
     public function getAllUsers() 
     {
         $ndb = new db_connection();
@@ -173,5 +200,11 @@ class User extends db_connection
     }
 
 }
+$email = 'jim.edward@ashesi.edu.gh';
+$password = 'casamigo@249824';
+$user = new User();
+$x = $user->login($email, $password);
+var_dump($x);
+
 
 ?>
