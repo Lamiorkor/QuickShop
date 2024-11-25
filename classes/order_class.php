@@ -78,6 +78,28 @@ class Orders extends db_connection
             return [];
         }
     }
+
+    public function getAllOrderDetails() {
+        $ndb = new db_connection();
+            
+        // SQL query to select order details along with product names for all orders by the user
+        $sql = "SELECT `order_details`.`order_detail_id`, `orders`.`order_id`, `orders`.`status` AS order_status, 
+                        `order_details`.`qty`, `order_details`.`price`, `products`.`pname`
+                FROM `order_details`
+                JOIN `products` ON `order_details`.`product_id` = `products`.`product_id`
+                JOIN `orders` ON `order_details`.`order_id` = `orders`.`order_id`
+                ORDER BY `orders`.`date` DESC";
+        
+        // Execute the query
+        if ($ndb->db_query($sql)) {
+            // Fetch all results as an associative array
+            $order_details = $ndb->db_fetch_all();
+            return $order_details ? $order_details : [];
+        } else {
+            error_log("Error retrieving order details: " . mysqli_error($ndb->db_conn()));
+            return [];
+        }
+    }
     
 
     public function deleteOrder($orderID) {

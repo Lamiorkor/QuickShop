@@ -57,4 +57,12 @@ function getCartItemsCostController($userID) {
     // Return the getCart method
     return $cart_items->getCartItemsCost($userID);
 }
+
+function clearCartController($userID) {
+    // Create an instance of the Cart class
+    $cart_item = new Cart();
+
+    // Return the getOneCart method
+    return $cart_item->clearCart($userID);
+}
 ?>

@@ -1,6 +1,10 @@
 <?php
 session_start();
-$role = $_SESSION['user_role']; // Example role, modify based on session value
+$role = 'administrator';
+$_SESSION['user_name'] = "Janet";
+$_SESSION['user_email'] = "jboye@gmail.com";
+$_SESSION['user_id'] = 1;
+//$role = $_SESSION['user_role']; // Example role, modify based on session value
 require_once('../controllers/user_controller.php');
 require_once('../controllers/product_controller.php'); // Include the product controller
 $users = getAllUsersController(); // Fetch all users for role management
@@ -9,6 +13,7 @@ $roleRequests = getAllRoleRequestsController(); // Fetch all role change request
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +21,7 @@ $roleRequests = getAllRoleRequestsController(); // Fetch all role change request
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
+
 <body>
     <div class="flex h-screen bg-gray-100">
         <!-- Sidebar -->
@@ -80,22 +86,23 @@ $roleRequests = getAllRoleRequestsController(); // Fetch all role change request
                                     <td class="p-3"><?php echo $user['user_id']; ?></td>
                                     <td class="p-3"><?php echo $user['name']; ?></td>
                                     <td class="p-3">
-                                        <select class="bg-gray-100 p-2 rounded">
-                                            <option value="administrator" <?php echo $user['role'] === 'administrator' ? 'selected' : ''; ?>>Administrator</option>
-                                            <option value="inventory manager" <?php echo $user['role'] === 'inventory manager' ? 'selected' : ''; ?>>Inventory Manager</option>
-                                            <option value="sales personnel" <?php echo $user['role'] === 'sales personnel' ? 'selected' : ''; ?>>Sales Personnel</option>
-                                            <option value="customer" <?php echo $user['role'] === 'customer' ? 'selected' : ''; ?>>Customer</option>                                        
-                                        </select>
-                                    </td>
-                                    <td class="p-3">
-                                        <form action="../actions/change_role_action.php" method="POST" style="display: inline;">
+                                        <form action="../actions/change_role_action.php" method="POST">
                                             <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
-                                            <input type="hidden" name="role" value="<?php echo $user['role']; ?>">
-                                            <button type="submit" name="action" value="approve" class="text-blue-500">Update</button>
+                                            <select name="role" class="bg-gray-100 p-2 rounded">
+                                                <option value="administrator" <?php echo $user['role'] === 'administrator' ? 'selected' : ''; ?>>Administrator</option>
+                                                <option value="inventory manager" <?php echo $user['role'] === 'inventory manager' ? 'selected' : ''; ?>>Inventory Manager</option>
+                                                <option value="sales personnel" <?php echo $user['role'] === 'sales personnel' ? 'selected' : ''; ?>>Sales Personnel</option>
+                                                <option value="customer" <?php echo $user['role'] === 'customer' ? 'selected' : ''; ?>>Customer</option>
+                                            </select>
+                                    </td>
+                                    <td class="p-3 flex items-center space-x-4">
+                                        <!-- Update Button -->
+                                        <button type="submit" name="action" value="approve" onclick="return confirm('Are you sure you want to update this user\'s role?')" class="text-blue-500 hover:text-blue-700">Update</button>
                                         </form>
-                                        <form action="../actions/delete_user_action.php" method="POST" style="display: inline;">
-                                            <input type="hidden" name="user_id" value="<?php echo $request['user_id']; ?>">
-                                            <button type="submit" name="action" value="delete" class="text-red-500">Delete</button>
+                                        <!-- Delete Button -->
+                                        <form action="../actions/delete_user_action.php" method="POST">
+                                            <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
+                                            <button type="submit" name="action" value="delete" onclick="return confirm('Are you sure you want to delete this user?')" class="text-red-500 hover:text-red-700">Delete</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -126,11 +133,11 @@ $roleRequests = getAllRoleRequestsController(); // Fetch all role change request
                                         <form action="../actions/handle_role_request_action.php" method="POST" style="display: inline;">
                                             <input type="hidden" name="user_id" value="<?php echo $request['user_id']; ?>">
                                             <input type="hidden" name="role" value="<?php echo $request['role_requested']; ?>">
-                                            <button type="submit" name="action" value="approve" class="text-green-500">Approve</button>
+                                            <button type="submit" name="action" value="approve" onclick="return confirm('Are you sure you want to approve this role change?')" class="text-green-500">Approve</button>
                                         </form>
                                         <form action="../actions/handle_role_request_action.php" method="POST" style="display: inline;">
                                             <input type="hidden" name="user_id" value="<?php echo $request['user_id']; ?>">
-                                            <button type="submit" name="action" value="deny" class="text-red-500">Deny</button>
+                                            <button type="submit" name="action" value="deny" onclick="return confirm('Are you sure you want to deny this role change?')" class="text-red-500">Deny</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -142,4 +149,5 @@ $roleRequests = getAllRoleRequestsController(); // Fetch all role change request
         </div>
     </div>
 </body>
+
 </html>
