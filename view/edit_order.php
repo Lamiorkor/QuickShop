@@ -38,12 +38,12 @@ $role = $_SESSION['user_role'];
                 <a href="admin.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
                     <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
                 </a>
-                <?php if ($role === 'administrator' || $role === 'sales personnel') { ?>
+                <?php if ($role === 'administrator' || $role === 'sales personnel' || $role === 'inventory manager') { ?>
                     <a href="manage_orders.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
                         <i class="fas fa-shopping-cart mr-3"></i> Orders
                     </a>
                 <?php } ?>
-                <?php if ($role === 'administrator' || $role === 'inventory manager') { ?>
+                <?php if ($role === 'administrator' || $role === 'sales personnel' || $role === 'inventory manager') { ?>
                     <a href="manage_products.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
                         <i class="fas fa-box mr-3"></i> Manage Products
                     </a>

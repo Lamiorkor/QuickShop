@@ -1,6 +1,6 @@
 <?php
 session_start();
-$role = $_SESSION['user_role']; 
+$role = $_SESSION['user_role'];
 require_once('../controllers/product_controller.php');
 $products = getProductsController(); // Fetch all products
 
@@ -8,6 +8,7 @@ $products = getProductsController(); // Fetch all products
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +16,7 @@ $products = getProductsController(); // Fetch all products
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
+
 <body>
     <div class="flex h-screen bg-gray-100">
         <!-- Sidebar -->
@@ -26,12 +28,12 @@ $products = getProductsController(); // Fetch all products
                 <a href="admin.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
                     <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
                 </a>
-                <?php if ($role === 'administrator' || $role === 'sales personnel') { ?>
+                <?php if ($role === 'administrator' || $role === 'sales personnel' || $role === 'inventory manager') { ?>
                     <a href="manage_orders.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
                         <i class="fas fa-shopping-cart mr-3"></i> Orders
                     </a>
                 <?php } ?>
-                <?php if ($role === 'administrator' || $role === 'inventory manager') { ?>
+                <?php if ($role === 'administrator' || $role === 'sales personnel' || $role === 'inventory manager') { ?>
                     <a href="manage_products.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
                         <i class="fas fa-box mr-3"></i> Manage Products
                     </a>
@@ -87,15 +89,23 @@ $products = getProductsController(); // Fetch all products
                                     <td class="p-3"><?php echo $product['description']; ?></td>
                                     <td class="p-3">$<?php echo $product['price']; ?></td>
                                     <td class="p-3"><?php echo $product['stock_qty']; ?></td>
-                                    <td class="p-3">
-                                        <form action ="edit_product.php" method = "GET">
-                                            <input type="hidden" name="product_id" value="<?php echo $product['product_id'];?>">
-                                            <button type="submit" class="text-blue-500">Edit</button>
-                                        </form>
-                                        <form action = "../actions/delete_product_action.php" method = "POST">
-                                            <input type="hidden" name="product_id" value="<?php echo $product['product_id'];?>">
-                                            <button class="text-red-500">Delete</button>
-                                        </form>
+                                    <td class="p-3 flex items-center space-x-4">
+                                        <?php if ($role === 'administrator' || $role === 'inventory_manager') { ?>
+                                            <!-- Edit Button -->
+                                            <form action="edit_product.php" method="GET" class="inline-block">
+                                                <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
+                                                <button type="submit" class="text-blue-500 hover:text-blue-700">Edit</button>
+                                            </form>
+                                            <!-- Delete Button -->
+                                            <form action="../actions/delete_product_action.php" method="POST" class="inline-block">
+                                                <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
+                                                <button type="submit" onclick="return confirm('Are you sure you want to delete this product?')" class="text-red-500 hover:text-red-700">Delete</button>
+                                            </form>
+                                        <?php } else { ?>
+                                            <!-- Disabled Buttons -->
+                                            <button class="text-gray-500" disabled>Edit</button>
+                                            <button class="text-gray-500" disabled>Delete</button>
+                                        <?php } ?>
                                     </td>
                                 </tr>
                             <?php } ?>
@@ -106,4 +116,5 @@ $products = getProductsController(); // Fetch all products
         </div>
     </div>
 </body>
+
 </html>

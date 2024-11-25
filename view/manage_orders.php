@@ -1,9 +1,9 @@
 <?php
 session_start();
-$role = 'administrator';
-$_SESSION['user_name'] = "Janet";
-$_SESSION['user_email'] = "jboye@gmail.com";
-$_SESSION['user_id'] = 1;
+$role = 'inventory manager';
+$_SESSION['user_name'] = "Akos Asante";
+$_SESSION['user_email'] = "aasante@hotmail.com";
+$_SESSION['user_id'] = 2;
 require_once('../controllers/order_controller.php');
 $orders = getOrdersController(); // Fetch all orders
 $order_details = getAllOrderDetailsController(); // Fetch all order details
@@ -31,12 +31,12 @@ $order_details = getAllOrderDetailsController(); // Fetch all order details
                 <a href="admin.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
                     <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
                 </a>
-                <?php if ($role === 'administrator' || $role === 'sales personnel') { ?>
+                <?php if ($role === 'administrator' || $role === 'sales personnel' || $role === 'inventory manager') { ?>
                     <a href="manage_orders.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
                         <i class="fas fa-shopping-cart mr-3"></i> Orders
                     </a>
                 <?php } ?>
-                <?php if ($role === 'administrator' || $role === 'inventory manager') { ?>
+                <?php if ($role === 'administrator' || $role === 'sales personnel' || $role === 'inventory manager') { ?>
                     <a href="manage_products.php" class="flex items-center py-3 px-6 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200">
                         <i class="fas fa-box mr-3"></i> Manage Products
                     </a>
@@ -81,7 +81,9 @@ $order_details = getAllOrderDetailsController(); // Fetch all order details
                                 <th class="p-3 text-left">Date Ordered</th>
                                 <th class="p-3 text-left">Total Amount</th>
                                 <th class="p-3 text-left">Status</th>
-                                <th class="p-3 text-left">Actions</th>
+                                <?php if ($role === 'administrator' || $role === 'sales personnel') { ?>
+                                    <th class="p-3 text-left">Actions</th>
+                                <?php } ?>
                             </tr>
                         </thead>
                         <tbody>
@@ -92,16 +94,18 @@ $order_details = getAllOrderDetailsController(); // Fetch all order details
                                     <td class="p-3"><?php echo $order['date']; ?></td>
                                     <td class="p-3">$<?php echo $order['total_amount']; ?></td>
                                     <td class="p-3"><?php echo $order['status']; ?></td>
-                                    <td class="p-3">
-                                        <form action="edit_order.php" method="POST">
-                                            <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
-                                            <button class="text-blue-500">Edit</button>
-                                        </form>
-                                        <form action="../actions/delete_order_action.php" method="POST">
-                                            <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
-                                            <button class="text-red-500">Delete</button>
-                                        </form>
-                                    </td>
+                                    <?php if ($role === 'administrator' || $role === 'sales personnel') { ?>
+                                        <td class="p-3">
+                                            <form action="edit_order.php" method="POST">
+                                                <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
+                                                <button class="text-blue-500">Edit</button>
+                                            </form>
+                                            <form action="../actions/delete_order_action.php" method="POST">
+                                                <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
+                                                <button class="text-red-500">Delete</button>
+                                            </form>
+                                        </td>
+                                    <?php } ?>
                                 </tr>
                             <?php } ?>
                         </tbody>
