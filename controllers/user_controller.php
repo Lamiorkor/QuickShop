@@ -11,13 +11,22 @@ function registerController($name, $email, $password) {
     return $new_user->addUser($name, $email, $password);
 }
 
+// function loginController($email, $password) {
+//     // Create an instance of the User class
+//     $old_user = new User();
+    
+//     // Return the login method
+//     return $old_user->login($email, $password); 
+// }
+
 function loginController($email, $password) {
     // Create an instance of the User class
-    $old_user = new User();
-    
-    // Return the login method
-    return $old_user->login($email, $password); 
+    $newUser = new User();
+
+    // Return the addUser method
+    return $newUser->validateUser($email, $password);
 }
+  
 
 function getAllCustomersController() {
     // Create an instance of the User class
