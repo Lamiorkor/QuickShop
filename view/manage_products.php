@@ -65,9 +65,11 @@ $products = getProductsController(); // Fetch all products
             <main class="p-6">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-semibold">Product List</h3>
-                    <a href="add_product.php" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded shadow">
-                        <i class="fas fa-plus mr-2"></i> Add New Product
-                    </a>
+                    <?php if ($role === 'administrator' || $role === 'inventory manager') { ?>
+                        <a href="add_product.php" class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded shadow">
+                            <i class="fas fa-plus mr-2"></i> Add New Product
+                        </a>
+                    <?php } ?>
                 </div>
                 <div class="bg-white p-6 rounded-lg shadow-sm">
                     <table class="w-full">
@@ -78,7 +80,9 @@ $products = getProductsController(); // Fetch all products
                                 <th class="p-3 text-left">Description</th>
                                 <th class="p-3 text-left">Price</th>
                                 <th class="p-3 text-left">Stock Quantity</th>
-                                <th class="p-3 text-left">Actions</th>
+                                <?php if ($role === 'administrator' || $role === 'inventory manager') { ?>
+                                    <th class="p-3 text-left">Actions</th>
+                                <?php } ?>
                             </tr>
                         </thead>
                         <tbody>
@@ -101,10 +105,6 @@ $products = getProductsController(); // Fetch all products
                                                 <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
                                                 <button type="submit" onclick="return confirm('Are you sure you want to delete this product?')" class="text-red-500 hover:text-red-700">Delete</button>
                                             </form>
-                                        <?php } else { ?>
-                                            <!-- Disabled Buttons -->
-                                            <button class="text-gray-500" disabled>Edit</button>
-                                            <button class="text-gray-500" disabled>Delete</button>
                                         <?php } ?>
                                     </td>
                                 </tr>
