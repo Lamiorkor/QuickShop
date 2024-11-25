@@ -13,10 +13,9 @@ if (isset($_POST['action']) && isset($_POST['product_id'])) {
         $increment = increaseCartItemQtyController($productID, $userID, $quantity); // Call the controller function to increase quantity
         if ($increment) {
             echo "Quantity increased";
-            if ($_SESSION['user_role'] == 2) {
-                header("Location:../view/user_cart.php");
-                exit();
-            }
+            header("Location:../view/cart.php");
+            exit();
+        }
             header('Location: ../view/cart.php');
             exit();
         }
@@ -27,8 +26,10 @@ if (isset($_POST['action']) && isset($_POST['product_id'])) {
             header('Location:../view/cart.php');
             exit();
         }
+        header('Location: ../view/cart.php');
+        exit();
     }
-}
+
 
 // Redirect back to the cart page after the update
 header('Location: ../view/cart.php');

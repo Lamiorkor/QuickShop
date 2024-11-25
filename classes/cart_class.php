@@ -169,6 +169,18 @@ class Cart extends db_connection {
             return 0;
         }
     }
+
+    public function clearCart($user_id) {
+        $ndb = new db_connection();
+
+        $user_id = mysqli_real_escape_string($ndb->db_conn(), $user_id);
+
+        // Prepare SQL statement to delete all cart items for a specific user
+        $sql = "DELETE FROM `cart` WHERE `user_id` = '$user_id'";
+
+        // Execute query and return result
+        return $ndb->db_query($sql);
+    }
     
 }
 

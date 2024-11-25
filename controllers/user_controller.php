@@ -58,6 +58,14 @@ function getAllUsersController() {
     return $users->getAllUsers();
 }
 
+function deleteUserController($user_id) {
+    // Create an instance of the User class
+    $user = new User();
+
+    // Return the deleteUser method
+    return $user->deleteUser($user_id);
+}
+
 function addRequestController($user_id, $role) {
     // Create an instance of the User class
     $new_request = new User();
@@ -97,5 +105,22 @@ function changeRoleToCustomerController($user_id) {
     // Return the changeUserRoleToAdmin method
     return $request->changeRoleToCustomer($user_id);
 }
+
+function getAllRoleRequestsController() {
+    // Create an instance of the User class
+    $user = new User();
+
+    // Return the getAllRoleRequests method
+    return $user->getAllRoleRequests();
+}
+
+function deleteRoleRequestController($user_id) {
+    // Create an instance of the User class
+    $request = new User();
+
+    // Return the deleteRoleRequest method
+    return $request->deleteRoleRequest($user_id);
+}
+
 
 ?>

@@ -49,6 +49,14 @@ function getOrderDetailsController($userID) {
     return $order->getOrderDetailsByUser($userID);
 }
 
+function getAllOrderDetailsController() {
+    // Create an instance of the Order class
+    $order = new Orders();
+
+    // Return the getOrderDetails method
+    return $order->getAllOrderDetails();
+}
+
 function getTotalOrdersCount(){
     // Create an instance of the Order class
     $order = new Orders();

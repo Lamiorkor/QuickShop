@@ -77,6 +77,7 @@ foreach ($order_details as $detail) {
                     <table class="w-full">
                         <thead>
                             <tr class="bg-gray-50">
+                                <th class="p-3 text-left">Order ID</th>
                                 <th class="p-3 text-left">Order Date</th>
                                 <th class="p-3 text-left">Product Name</th>
                                 <th class="p-3 text-left">Quantity</th>
@@ -88,6 +89,7 @@ foreach ($order_details as $detail) {
                             <?php if ($order_details): ?>
                                 <?php foreach ($order_details as $detail): ?>
                                     <tr class="border-t">
+                                        <td class="p-3"><?php echo $detail['order_id']; ?></td>
                                         <td class="p-3"><?php echo $detail['order_date']; ?></td>
                                         <td class="p-3"><?php echo $detail['pname']; ?></td>
                                         <td class="p-3"><?php echo $detail['qty']; ?></td>

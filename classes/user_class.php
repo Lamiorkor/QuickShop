@@ -178,6 +178,15 @@ class User extends db_connection
         return $ndb->db_fetch_all();
     }
     
+    public function deleteUser($userID) {
+        $ndb = new db_connection();
+
+        // SQL query to delete a user
+        $sql = "DELETE FROM `users` WHERE `user_id` = '$userID'";
+
+        // Execute query and return result
+        return $ndb->db_query($sql);
+    }
 
     public function addRequest($userID, $role)
     {
@@ -239,8 +248,40 @@ class User extends db_connection
         return $this->db_query($sql);
     }
 
+    public function getAllRoleRequests() {
+        // Instantiate the database connection
+        $ndb = new db_connection();
+        
+        // Define the SQL query to fetch all role change requests
+        $sql = "SELECT `requests`.*, `users`.`name` 
+                FROM `requests`
+                JOIN `users` ON `users`.`user_id` = `requests`.`user_id`";
+        
+        // Execute the query
+        if ($ndb->db_query($sql)) {
+            // Fetch all results
+            return $ndb->db_fetch_all();
+        } else {
+            // Return false if query fails
+            return false;
+        }
+    }
+
+    public function deleteRoleRequest($user_id) {
+        // Instantiate the database connection
+        $ndb = new db_connection();
+        
+        // Define the SQL query to delete a role change request
+        $sql = "DELETE FROM `requests` WHERE `user_id` = '$user_id'";
+        
+        // Execute the query using db_query method from db_connection class
+        if ($ndb->db_query($sql)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
-
-
 
 ?>
