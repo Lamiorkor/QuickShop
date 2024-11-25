@@ -11,8 +11,7 @@ if (isset($_POST['login'])) {
         
         // Login user
         $user = loginController($email, $password);
-        var_dump($user);
-        exit;
+        
         // Check if login was successful
         if ($user) {
             // Start session

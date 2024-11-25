@@ -10,10 +10,10 @@ if (isset($_POST['signup'])) {
     // $requested_role = $_POST['rolerequest'];
     // $user_id = $_SESSION['user_id'];
 
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    //$hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // Call registerController
-    $registerUser = registerController($name, $email, $hashed_password);
+    $registerUser = registerController($name, $email, $password);
 
     // Call addRequestController
     //$role_request = addRequestController($user_id, $requested_role);

@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate the OTP using the controller
     if (validateOTPController($user_id, $userOtpInput)) {
         // Success - redirect to success page
-        Store user data in session
+        //Store user data in session
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['user_email'] = $user['email'];
             $_SESSION['user_name'] = $user['name'];

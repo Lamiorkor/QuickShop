@@ -17,7 +17,7 @@ class User extends db_connection
         $user_email = mysqli_real_escape_string($ndb->db_conn(), $email);
         $user_password = mysqli_real_escape_string($ndb->db_conn(), $password);
 
-        $hashed_password = password_hash($user_password, PASSWORD_DEFAULT);
+        $hashed_password = password_hash($user_password, PASSWORD_BCRYPT);
 
         // SQL query to insert a new customer
         $sql = "INSERT INTO `users` (`name`, `email`, `password`, `role`) 
@@ -47,7 +47,7 @@ class User extends db_connection
         $email = mysqli_real_escape_string($ndb->db_conn(), $email);
         
         // Prepare SQL statement
-        $sql = "SELECT * FROM `users` WHERE `email` = '$email'";
+        $sql = "SELECT * FROM users WHERE email = '$email'";
         $result = $ndb->db_query($sql);
         
         if ($result) {
@@ -121,6 +121,7 @@ class User extends db_connection
         }
     }
 
+    
     public function getAllUsers() 
     {
         $ndb = new db_connection();
@@ -199,5 +200,11 @@ class User extends db_connection
     }
 
 }
+$email = 'jim.edward@ashesi.edu.gh';
+$password = 'casamigo@249824';
+$user = new User();
+$x = $user->login($email, $password);
+var_dump($x);
+
 
 ?>

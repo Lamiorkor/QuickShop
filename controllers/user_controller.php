@@ -21,10 +21,10 @@ function registerController($name, $email, $password) {
 
 function loginController($email, $password) {
     // Create an instance of the User class
-    $newUser = new User();
-
-    // Return the addUser method
-    return $newUser->validateUser($email, $password);
+    $old_user = new User();
+    
+    // Return the login method
+    return $old_user->login($email, $password); 
 }
   
 
