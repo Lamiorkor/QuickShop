@@ -1,6 +1,6 @@
 <?php
 session_start();
-$role = "administrator";
+$role = $_SESSION['user_role'];
 require_once('../controllers/order_controller.php');
 $orders = getOrdersController(); // Fetch all orders
 $order_details = getAllOrderDetailsController(); // Fetch all order details

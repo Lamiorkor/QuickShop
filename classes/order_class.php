@@ -290,7 +290,7 @@ class Orders extends db_connection
             // Execute the query
             return $this->db_query($update);
         } else {
-            // If cart item doesn't already exist, return false
+            // If item doesn't already exist, return false
             return false;
         }
     }

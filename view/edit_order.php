@@ -19,7 +19,7 @@ $total_amt = $order['total_amount'];
 $status = $order['status']; 
 
 // Get user role from the session
-$role = "administrator";
+$role = $_SESSION['user_role'];
 ?>
 
 <!DOCTYPE html>

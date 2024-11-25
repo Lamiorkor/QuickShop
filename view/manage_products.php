@@ -1,6 +1,6 @@
 <?php
 session_start();
-$role = "administrator";
+$role = $_SESSION['user_role'];
 require_once('../controllers/product_controller.php');
 $products = getProductsController(); // Fetch all products
 
