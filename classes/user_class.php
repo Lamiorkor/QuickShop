@@ -121,6 +121,46 @@ class User extends db_connection
         }
     }
 
+    public function updateCustomer($user_id,$name, $email, $password) {
+        $ndb = new db_connection();
+        // Sanitize the input values to prevent SQL injection
+        $user_id = mysqli_real_escape_string($ndb->db_conn(), $user_id);
+        $user_name = mysqli_real_escape_string($ndb->db_conn(), $name);
+        $user_email = mysqli_real_escape_string($ndb->db_conn(), $email);
+        $user_password = mysqli_real_escape_string($ndb->db_conn(), $password);
+        
+        // Hash the password
+        $hashed_password = password_hash($user_password, PASSWORD_BCRYPT);
+        
+        // SQL query to update the customer details
+        $sql = "UPDATE users 
+                SET name = '$user_name', email = '$user_email', password = '$hashed_password' 
+                WHERE user_id = '$user_id'";
+        // Execute the query and return the result
+        return $ndb->db_query($sql);
+    }
+
+    public function getUserById($user_id) {
+        $ndb = new db_connection();
+        // Sanitize the input values to prevent SQL injection
+        $user_id = mysqli_real_escape_string($ndb->db_conn(), $user_id);
+        
+        // SQL query to fetch user details based on the provided user ID
+        $sql = "SELECT * FROM users WHERE user_id = '$user_id'";
+        
+        // Fetch the user record from the database
+        $user = $ndb->db_fetch_one($sql);
+    
+        // Check if user exists
+        if ($user) {
+            // If user is found, return user data
+            return $user;
+        } else {
+            // If no user is found, return false
+            return false;
+        }
+    }
+
     
     public function getAllUsers() 
     {

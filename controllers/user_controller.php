@@ -35,7 +35,21 @@ function getAllCustomersController() {
     // Return the getAllCustomers method
     return $all_customers->getAllCustomers();
 }
+function updateUserController($user_id,$name, $email, $password) {
+    // Create an instance of the User class
+    $update_user = new User();
 
+    // Return the updateUser method
+    return $update_user->updateCustomer($user_id,$name, $email, $password);
+}
+
+function getUserByIdController($user_id) {
+    // Create an instance of the User class
+    $user = new User();
+
+    // Return the getUserById method
+    return $user->getUserById($user_id);
+}
 function getAllUsersController() {
     // Create an instance of the User class
     $users = new User();

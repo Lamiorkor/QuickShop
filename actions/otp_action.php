@@ -33,8 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-   // Login user
-    $user = loginController($email, $password);
+   
     
     // Get form inputs
     $userOtpInput = $_POST['otp'];
@@ -45,10 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (validateOTPController($user_id, $userOtpInput)) {
         // Success - redirect to success page
         //Store user data in session
-            $_SESSION['user_id'] = $user['user_id'];
-            $_SESSION['user_email'] = $user['email'];
-            $_SESSION['user_name'] = $user['name'];
-            $_SESSION['user_role'] = $user['role'];
+            
 
             if ($_SESSION['user_role'] === 'administrator') {
                 header("Location: ../view/admin.php");

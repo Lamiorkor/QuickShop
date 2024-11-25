@@ -18,6 +18,10 @@ if (isset($_POST['login'])) {
             session_start();
             if (sendOTPController($email)) {
                 // OTP was successfully generated and sent
+            $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['user_email'] = $user['email'];
+            $_SESSION['user_name'] = $user['name'];
+            $_SESSION['user_role'] = $user['role'];
                 header("Location: ../view/otp.php");
                 exit();  // Always exit after header redirects
             } else {

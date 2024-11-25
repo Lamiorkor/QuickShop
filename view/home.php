@@ -23,23 +23,27 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
     <!-- Navbar -->
     <nav class="bg-gray-800 p-4">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="home.php" class="text-white text-2xl font-bold">QuickShop</a>
-            <div class="flex items-center space-x-4">
-                <a href="home.php" class="text-gray-300 hover:text-white">Home</a>
-                <a href="products.php" class="text-gray-300 hover:text-white">Products</a>
-                <a href="view_orders.php" class="text-gray-300 hover:text-white">Orders</a>
-                <?php if ($user_name): ?>
-                    <span class="text-gray-300">Hello, <?php echo $user_name; ?>!</span>
-                    <a href="../actions/logout_action.php" class="text-red-500 hover:text-red-700">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </a>
-                <?php else: ?>
-                    <a href="login_and_register.php" class="text-gray-300 hover:text-white">Login/Register</a>
-                <?php endif; ?>
-            </div>
+    <div class="container mx-auto flex justify-between items-center">
+        <a href="home.php" class="text-white text-2xl font-bold">QuickShop</a>
+        <div class="flex items-center space-x-4">
+            <a href="home.php" class="text-gray-300 hover:text-white">Home</a>
+            <a href="products.php" class="text-gray-300 hover:text-white">Products</a>
+            <a href="view_orders.php" class="text-gray-300 hover:text-white">Orders</a>
+            <?php if ($user_name): ?>
+                <span class="text-gray-300">Hello, <?php echo $user_name; ?>!</span>
+                <a href="edit_customer.php" class="text-gray-300 hover:text-white">
+                    <i class="fas fa-user-edit"></i> Update Your Account
+                </a>
+                <a href="../actions/logout_action.php" class="text-red-500 hover:text-red-700">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            <?php else: ?>
+                <a href="login_and_register.php" class="text-gray-300 hover:text-white">Login/Register</a>
+            <?php endif; ?>
         </div>
-    </nav>
+    </div>
+</nav>
+
 
     <!-- Hero Section -->
     <header class="bg-cover bg-center h-96" style="background-image: url('hero-image.jpg');">
